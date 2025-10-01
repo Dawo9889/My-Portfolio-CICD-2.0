@@ -41,13 +41,13 @@ export function HobbyScianka() {
             {/* Text section */}
             <div className="w-full mb-10 lg:mb-0">
               <TypographyAny variant="h3" color="blue-gray" className="mb-4 font-bold lg:max-w-xs">
-                3. Wspinaczka ściankowa
+                3. Indoor climbing
               </TypographyAny>
               <TypographyAny className="mb-3 w-full lg:w-8/12 font-normal !text-gray-500">
-                Wspinaczka ściankowa to dla mnie świetny sposób na poprawę siły, techniki i koncentracji. Zacząłem od boulderowni, ale z czasem przerzuciłem się też na wspinanie z liną. Wymaga skupienia, planowania i dobrej współpracy z partnerem asekuracyjnym — co przekłada się też na inne obszary życia.
+                Indoor climbing is a great way for me to improve strength, technique, and focus. I started with bouldering, and gradually moved to rope climbing. It requires concentration, planning, and good teamwork with a belay partner — skills that translate to other areas of life as well.
               </TypographyAny>
               <TypographyAny variant="h6" color="blue-gray" className="mb-0.5">
-                Pare zdjęć
+                A few photos
               </TypographyAny>
               <div className="flex items-center gap-4">
                 <AvatarAny
@@ -131,7 +131,7 @@ export function HobbyScianka() {
                   width={576}
                   height={768}
                   src={imgSrc}
-                  alt={`Zdjęcie wspinaczki ${active}`}
+                  alt={`Climbing photo ${active}`}
                   className="h-full w-full object-cover rounded-lg"
                   onError={onImageError}
                 />

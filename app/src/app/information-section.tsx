@@ -14,22 +14,22 @@ import { title } from "process";
 const POJECTS= [
   {
     icon: CommandLineIcon,
-    title: "Cupid App – aplikacja stworzona do robienia i zarządzania zdjęciami weselnymi.",
+    title: "Cupid App – an application for taking and managing wedding photos.",
     githubLink: "https://github.com/Dawo9889/cupid-app",
     date: "10.2024 - 02.2025",
     children: (
       <>
-        Wspólny projekt z trójką znajomych mający na celu stworzenie aplikacji weselnej dostępnej zarówno na przeglądarki, jak i smartfony. 
-        Aplikacja umożliwia fotografowi dostęp do zdjęć z innej perspektywy – mianowicie, goście weselni mogą za jej pomocą robić zdjęcia 
-        i udostępniać je w czasie rzeczywistym, prezentując wydarzenie z ich punktu widzenia.
+        A collaborative project with three friends to create a wedding app available on both web and mobile.
+        The app allows photographers to access photos from a different perspective — wedding guests can take and share photos in real time,
+        showcasing the event from their point of view.
         <br></br>
         <br></br>
-        Moim głównym zadaniem było: <br></br>
+        My main responsibilities included: <br></br>
 
-          - Opracowanie aplikacji backendowej,<br></br>
-          - Zabezpieczenie aplikacji,<br></br>
-          - Skonteneryzowanie aplikacji za pomocą Dockera,<br></br>
-          - Wystawienie aplikacji na serwer produkcyjny.<br></br>
+          - Backend application development,<br></br>
+          - Securing the application,<br></br>
+          - Containerizing the application with Docker,<br></br>
+          - Deploying the application to a production server.<br></br>
 
       </>
     ),
@@ -39,48 +39,36 @@ const POJECTS= [
     title: "My Portfolio CI/CD Project Development",
     githubLink: "https://github.com/Dawo9889/My-Portfolio-CICD",
     date: "01.2025",
-    children: "Nie ma co się za bardzo rozpisywać – oto projekt, który udało mi się stworzyć i który z dumą prezentuję!"
+    children: "No need for a long explanation — this is the project I built and proudly present!"
   },
   {
     icon: CommandLineIcon,
-    title: "Dokumentacja z początków tworzenia mojego HomeLab'a",
+  title: "Documentation from the early stages of building my HomeLab",
     githubLink: "https://github.com/Dawo9889/HomeLab",
     date: "2024",
-    children: 
-     "Dokumentacja zawiera wszystkie etapy tworzenia osobistego, taniego Home Laba, który na początku miał służyć tylko pod nauke, \
-      jednak po wdrożeniu okazało się to idealne narzędzie do użytku codziennego, co może ułatwić pracę wielu osobom.\
-       Przez home lab mam na myśli urządzenie czynne przez 24h/7, na którym będą uruchomione liczne usługi."
+  children: "This documentation contains all stages of creating a personal, low-cost HomeLab. Initially intended for learning, it became a practical tool for everyday use, running multiple services 24/7."
   },
   {
     icon: CommandLineIcon,
     title: "App In AKS",
     githubLink: "https://github.com/Dawo9889/AppInAKS",
     date: "2024",
-    children:
-      "Aplikacja internetowa zbudowana w technologii Node.js, gdzie każdy komponent jest konteneryzowany za \
-       pomocą Dockera, co zapewnia modułowość i efektywność. Dane uwierzytelniające są bezpiecznie przechowywane \
-       w bazie danych MongoDB, co gwarantuje solidną ochronę danych. Cały system jest wdrożony na platformie Microsoft Azure, \
-       z wykorzystaniem Kubernetes, co zapewnia skalowalność, niezawodność oraz sprawną orkiestrację konteneryzowanych usług.",
+    children: "A web application built with Node.js where each component is containerized using Docker, providing modularity and efficiency. Credentials are securely stored in MongoDB. The system is deployed on Microsoft Azure using Kubernetes for scalability and reliability.",
   },
   {
     icon: CommandLineIcon,
-    title: "Aplikacja webowa do zarządzania akademikiem",
+  title: "Web app for dormitory management",
     githubLink: "https://github.com/Dawo9889/AkademikMVC",
     date: "2024",
-    children:
-      "Aplikacja internetowa zaprojektowana w celu ułatwienia zarządzania akademikami. \
-        Zbudowana w oparciu o ASP.NET z zastosowaniem zasad czystej architektury i wzorca MVC, zapewnia \
-        modułowość i łatwość rozwoju w przyszłości.\
-        System umożliwia kompleksowe zarządzanie mieszkańcami oraz pokojami, obejmując takie funkcje jak \
-        rejestracja nowych mieszkańców, przydzielanie miejsc w pokojach, a także monitorowanie dostępności i historii zamieszkania"
+    children: "A web application designed to simplify dormitory management. Built with ASP.NET, applying clean architecture and the MVC pattern, it enables modular growth. The system supports resident registration, room assignments, and tracking availability and housing history."
   },
   {
     icon: CommandLineIcon,
-    title: "Artykuł porównujący wydajności klasyfikatorów Naive Bayes i K-Najbliższych Sąsiadów",
+  title: "Article comparing the performance of Naive Bayes and K-Nearest Neighbors",
     githubLink: "https://ceur-ws.org/Vol-3885/paper37.pdf",
     date: "2024",
     children:
-     "Artykuł miał na celu porównanie wydajności klasyfikatorów Naive Bayes i K-Najbliższych Sąsiadów."
+    "The article aimed to compare the performance of Naive Bayes and K-Nearest Neighbors classifiers."
   },
 
 ];
@@ -88,28 +76,21 @@ const POJECTS= [
 const EXPERIENCE = [
   {
     icon: BriefcaseIcon,
-    title: "Stażysta DevOps | COIG S.A.",
+  title: "DevOps Intern | COIG S.A.",
     date: "07.2024 - 10.2024",
-    children:
-      "Moim głównym zadaniem było zapoznanie się z pracą w środowisku IT w dużej firmie. Skupiłem się na zrozumieniu przepływów pracy, współpracy z zespołami międzydziałowymi oraz poznawaniu podstawowych praktyk DevOps w praktycznym środowisku.",
+    children: "My main task was to get familiar with working in an IT environment within a large company. I focused on understanding workflows, cross-team collaboration, and practical DevOps practices.",
   },
   {
     icon: BriefcaseIcon,
-    title: "Pracownik DevOps | COIG S.A.",
+  title: "DevOps Engineer | COIG S.A.",
     date: "10.2024 - 05.2025",
-    children:
-      "Moim głównym zadaniem była współpraca z zespołem wdrożeniowców przy realizacji zadań związanych z rozwojem i utrzymaniem infrastruktury IT. \
-       Kluczowym elementem mojej pracy było zarządzanie kontenerami oraz ich orkiestracja. \
-       Na co dzień korzystałem z narzędzi takich jak Prometheus i Grafana do monitorowania i analizy wydajności systemów.",
+    children: "I worked with the deployment team on tasks related to the development and maintenance of IT infrastructure. Key parts of my role included container management and orchestration. I regularly used tools like Prometheus and Grafana for monitoring and performance analysis.",
   },
   {
     icon: BriefcaseIcon,
     title: "Cloud DevOps Engineer | SAP Poland",
     date: "07.2025 - NOW",
-    children:
-      "Pracuję przy projekcie open source Kyma jako członek zespołu DevOps. \
-      Moje obowiązki obejmują projektowanie, wdrażanie i utrzymanie pipeline’ów CI/CD oraz usług wspierających zespoły developerskie. \
-      Skupiam się na automatyzacji procesów, poprawie niezawodności oraz usprawnianiu wydajności dostarczania oprogramowania.",
+    children: "I work on the Kyma open-source project as part of the DevOps team. My responsibilities include designing, implementing, and maintaining CI/CD pipelines and supporting services for development teams. I focus on automation, reliability, and improving delivery performance.",
 
   }
 ];
@@ -122,94 +103,94 @@ const CERTIFICATES = [
     date: "Technical Skills",
     githubLink: "https://www.linkedin.com/in/galadawid/overlay/1717882932032/single-media-viewer/?type=DOCUMENT&profileId=ACoAAEX78IcBnWMfZ3oQfHKNwbBbkLLHPEDBZj8",
     children:
-      "Ukazuje podejście do zabezpieczeń w firmie i w rozwiązaniach komercyjnych. Kurs miał prawie 40h, gdzie każego dnia uczyłem się czegoś nowego. Przede wszystkim dowiedziałem się jak zabezpieczyć firmę przed potencjalnymi atakami cyber.",
+      "Covers approaches to corporate and commercial security. The ~40-hour course taught practical measures for protecting organizations from cyber threats.",
   },
     {
     icon: AcademicCapIcon,
     title: "Program Corporate Readiness Certificate, ING Hubs - Administrator IT",
     date: "Technical Skills",
     githubLink: "https://credsverse.com/credentials/78bd82ff-2a51-426b-8a2e-9cd202a82cfd",
-    children: "Na szkoleniu nauczyłem się pracy z administrowaniem systemami IT w korporacji"   
+    children: "During the training I learned how to administer IT systems in a corporate environment."   
   }
 ];
 
 const SKILLS = [
   {
     icon: FireIcon,
-    title: "C#, ASP.NET, Architektura MVC",
+    title: "C#, ASP.NET, MVC Architecture",
     date: "Technical Skills",
     children:
-      "Technologie, które towarzyszyły mi w trakcie studiów przy tworzeniu aplikacji backendowych. Dzięki nim zdobyłem solidne podstawy w programowaniu obiektowym, zarządzaniu danymi oraz tworzeniu interfejsów API",
+      "Technologies I used during my studies for building backend applications. They helped me gain solid foundations in object-oriented programming, data handling, and API design.",
   },
   {
     icon: FireIcon,
     title: "Git, Github, Github Actions",
     date: "Technical Skills",
     children:
-      "Technologie bez których nie można się poruszać po świecie IT. Wszystkie swoje kody opieram na systemie kontroli wersji. Jako repozytorium online najcześciej wykorzystuje github.",
+      "Tools essential to modern software development. I rely heavily on version control, primarily using GitHub for online repositories.",
   },
   {
     icon: FireIcon,
     title: "Docker & Kubernetes",
     date: "Technical Skills",
     children:
-      "Z Dockera korzystam teraz chyba najczęściej. To na nim mam postawione wiele usług w swoim domu. Na przyklad Immich, nextcloud etc. Kubernetes jest technologią z którą mam doświadczenie, ale jeszcze dluga droga przede mną. Mogę zdradzić, że projekt mój projekt inżynierski będzie oparty głównie na tej technologii :) ",
+      "I use Docker frequently to run many of my home services (e.g., Immich, Nextcloud). I have experience with Kubernetes and plan to base my engineering project on it.",
   },
   {
     icon: CommandLineIcon,
-    title: "Linux i Windows",
+    title: "Linux & Windows",
     date: "Technical Skills",
     children:
-      "Doskonale wiemy, że DevOps i linux to rzeczy wzajemnie się przyciągające. Bez znajomości tego systemu operacyjnego praca jako DevOps nie ma kompletnie sensu",
+      "Familiarity with Linux and Windows is essential in DevOps. Understanding these operating systems is critical for a career in infrastructure and operations.",
   },
   {
     icon: CommandLineIcon,
-    title: "Vagrant i Ansible",
+    title: "Vagrant & Ansible",
     date: "Technical Skills",
     children:
-      "Narzędzia ktore pomagają zautomatyzować wdrażanie na nowo systemów. Vagrant sprawia, że tworzenie nowych maszyn wirtualnych jest bardzo proste, a Ansible pomaga w ich konfigurowaniu",
+      "Tools that help automate provisioning and configuration. Vagrant simplifies creating VMs, and Ansible automates their configuration.",
   },
   {
     icon: CommandLineIcon,
     title: "Jenkins",
     date: "Technical Skills",
     children:
-      "Jenkins umożliwia budowanie, testowanie i wdrażanie aplikacji w sposób szybki, spójny i niezawodny. Dzięki niemu można automatycznie uruchamiać skrypty po wprowadzeniu zmian w kodzie, integrować projekty, wykrywać błędy na wczesnym etapie i przyspieszać dostarczanie oprogramowania.",
+      "Jenkins enables building, testing, and deploying applications in a consistent and automated way. It helps run scripts on code changes, catch issues early, and speed up delivery.",
   },
   {
     icon: FireIcon,
     title: "Prometheus, Grafana, Grafana Loki",
     date: "Technical Skills",
     children:
-      "Prometheus, Grafana i Grafana Loki to narzędzia, które wykorzystuję do monitorowania oraz analizy systemów. Prometheus służy do zbierania i przechowywania metryk aplikacji, Grafana umożliwia wizualizację danych w postaci interaktywnych dashboardów, a Grafana Loki pozwala na efektywne gromadzenie i przeszukiwanie logów, co ułatwia diagnozowanie problemów i optymalizację działania aplikacji.",
+      "Prometheus, Grafana, and Grafana Loki are tools I use for monitoring and analysis. Prometheus collects metrics, Grafana visualizes dashboards, and Loki aggregates logs for easier troubleshooting.",
   },
   {
   icon: FireIcon,
   title: "Terraform",
   date: "Technical Skills",
   children:
-    "Terraforma używałem do automatycznego tworzenia infrastruktury w chmurze. Pisałem moduły do provisionowania instancji EC2 w AWS oraz konfiguracji sieci VPC. Dzięki temu lepiej zrozumiałem podejście Infrastructure as Code i mogłem szybciej powtarzalnie budować środowiska testowe i produkcyjne.",
+    "I used Terraform to provision cloud infrastructure, writing modules for EC2 instances and VPC configuration. This reinforced the Infrastructure as Code approach.",
   },
   {
     icon: FireIcon,
     title: "Apache HTTP Server",
     date: "Technical Skills",
     children:
-      "Apache'a używałem do konfiguracji serwerów WWW, głównie w środowiskach testowych. Konfigurowałem wirtualne hosty, przekierowania oraz obsługę HTTPS przy użyciu certyfikatów SSL. Pomogło mi to zrozumieć podstawy działania backendowego serwera HTTP oraz jego integrację z aplikacjami webowymi.",
+      "I used Apache for configuring web servers in test environments: virtual hosts, redirects, and HTTPS with SSL certificates. It helped me understand server-side web integration.",
   },
   {
     icon: FireIcon,
     title: "Nginx",
     date: "Technical Skills",
     children:
-      "Nginx wykorzystywałem zarówno jako serwer statycznych plików, jak i jako reverse proxy. Konfigurowałem load balancing i przekierowania do aplikacji uruchomionych na różnych portach. Dzięki pracy z Nginx zrozumiałem lepiej jak działa routing żądań i optymalizacja wydajności w aplikacjach webowych.",
+      "I used Nginx as a static file server and reverse proxy, configuring load balancing and routing to apps on different ports. Working with Nginx improved my understanding of request routing and performance optimization.",
   },
   {
     icon: FireIcon,
     title: "SSL & PKI",
     date: "Technical Skills",
     children:
-      "Pracując z certyfikatami SSL oraz infrastrukturą klucza publicznego (PKI), nauczyłem się generować i zarządzać certyfikatami X.509, tworzyć żądania CSR oraz korzystać z własnych i zaufanych urzędów certyfikacji (CA). Konfigurowałem HTTPS na serwerach Nginx i Apache, dbając o bezpieczeństwo komunikacji i zgodność z aktualnymi standardami (np. TLS 1.2+). Dzięki tej wiedzy lepiej rozumiem, jak działa uwierzytelnianie i szyfrowanie w sieci.",
+      "Working with SSL certificates and PKI taught me how to generate and manage X.509 certs, create CSRs, and configure HTTPS on Nginx and Apache. This improved my understanding of authentication and encryption.",
   },
 
   {
@@ -217,21 +198,21 @@ const SKILLS = [
     title: "Azure Cloud",
     date: "Technical Skills",
     children:
-      "Azure używałem do tworzenia maszyn wirtualnych z publicznym ip. Pomagało mi to na wdrażanie aplikacji, które miały być wszędzie dostępne. Mocno przydatne okazało się także AKS z gotowym load balancerem",
+      "I used Azure to create VMs with public IPs for deploying publicly accessible applications. AKS with a built-in load balancer was particularly useful.",
   },
   {
     icon: FireIcon,
     title: "AWS Cloud",
     date: "Technical Skills",
     children:
-      "W ramach nauki chmury AWS pracowałem z różnymi usługami, w tym EC2 do uruchamiania maszyn wirtualnych i S3 do przechowywania plików. Szczególną uwagę poświęciłem Amazon EKS, ucząc się wdrażania aplikacji kontenerowych i zarządzania klastrem Kubernetes. Było to cenne doświadczenie w kontekście automatyzacji i skalowania usług.",
+      "While learning AWS, I worked with services like EC2 and S3. I focused on Amazon EKS for deploying containerized applications and managing Kubernetes clusters.",
   },
 
   {
     icon: AcademicCapIcon,
-    title: "Angielski, poziom B2/C1",
+    title: "English, level B2/C1",
     date: "Soft Skills",
-    children: "Przede wszystkim mój angielski pomaga mi w pracy. Czytanie dokumentacji, która często jest po angielsku nie sprawia mi problemu. Troche inaczej jest z rozmową, ale dalej jest to poziom wyższy niż komunikatywny",
+    children: "My English helps me at work. Reading technical documentation is comfortable; conversational skills are improving toward advanced levels.",
   }
 ];
 
@@ -246,14 +227,14 @@ export function InformationSection() {
             color="blue-gray"
             className="mb-2 text-3xl font-bold"
           >
-            Projekty
+            Projects
           </Typography>
 
           <Typography
             variant="lead"
             className="!text-gray-500"
           >
-            Wszystkie moje projekty, z których jestem zadowolny.
+            A selection of projects I'm proud of.
           </Typography>
 
           <div className="mt-12 grid grid-cols-1 gap-16 gap-y-12">
@@ -269,14 +250,14 @@ export function InformationSection() {
             color="blue-gray"
             className="mb-2 text-3xl font-bold"
           >
-            Doświadczenie
+            Experience
           </Typography>
 
           <Typography
             variant="lead"
             className="!text-gray-500"
           >
-            Moje doświadczenie jako IT DevOps
+            My experience in IT and DevOps
           </Typography>
 
           <div className="mt-12 grid grid-cols-1 gap-16 gap-y-12">
@@ -292,14 +273,14 @@ export function InformationSection() {
             color="blue-gray"
             className="mb-2 text-3xl font-bold"
           >
-            Certyfikaty
+            Certificates
           </Typography>
 
           <Typography
             variant="lead"
             className="!text-gray-500"
           >
-            Zobacz wszystkie ważniejsze w moim życiu certyfikaty.
+            Some notable certificates and training.
           </Typography>
 
           <div className="mt-12 grid grid-cols-1 gap-16 gap-y-12">
@@ -314,14 +295,14 @@ export function InformationSection() {
             color="blue-gray"
             className="mb-2 text-3xl font-bold"
           >
-            Umięjętności
+            Skills
           </Typography>
 
           <Typography
             variant="lead"
             className="!text-gray-500"
           >
-            Czyli czego nauczyłem się do tej pory
+            Technologies and tools I've learned so far
           </Typography>
 
           <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-16 gap-y-12">
@@ -333,13 +314,13 @@ export function InformationSection() {
       </div>
       <div className="container mx-auto mt-20 text-center">
           <Typography variant="h2" color="blue-gray" className="mb-4">
-            Co robię w wolnym czasie?
+            What I do in my free time
           </Typography>
           <Typography
             variant="lead"
             className="mx-auto w-full px-4 font-normal !text-gray-500 lg:w-8/12"
           >
-            Wolny czas przede wszystkim staram się spędzać aktywnie. Dużo siedzę przed komputerem na studiach i w pracy także każdy ruch jest mi bardzo wskazany
+            I try to spend my free time actively. I spend a lot of time at the computer for studies and work, so physical activity is important to me.
           </Typography>
         </div>
     </section>

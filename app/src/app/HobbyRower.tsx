@@ -19,13 +19,13 @@ export function HobbyRower() {
                 variant="h3"
                 color="blue-gray"
                 className="mb-4 font-bold lg:max-w-xs">
-                1. Jeżdżę na rowerze
+                1. I ride a bike
               </Typography>
               <Typography className="mb-3 w-full lg:w-8/12 font-normal !text-gray-500">
-              Niedawno kupiłem rower, a już zastanawiam się, czy nie zamienić go na model typu full suspension. Jazda po górach to dla mnie ogromna frajda (choć wjazdy nie są aż tak ekscytujące…). Natomiast zjazdy – to dopiero jest to, co uwielbiam najbardziej!
+              I recently bought a bike and I'm already considering upgrading to a full-suspension model. Riding in the mountains is a lot of fun for me (even if climbs aren't as exciting...). The descents are what I enjoy the most!
               </Typography>
               <Typography variant="h6" color="blue-gray" className="mb-0.5">
-                Pare zdjęć
+                A few photos
               </Typography>
               <div className="flex items-center gap-4">
                 <Avatar
