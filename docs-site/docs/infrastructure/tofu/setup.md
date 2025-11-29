@@ -11,9 +11,9 @@ I keep this lightweight and safe for local dev.
 - State backend points to MinIO (`terraform-states` bucket) for portability.
 
 ### 4. Provider Config
-See the Proxmox provider config in `infrastructure/tofu/provider.tf`.
+See the Proxmox provider config below. (Original file: `infrastructure/tofu/provider.tf`)
 
-[Open provider.tf](../../../infrastructure/tofu/provider.tf)
+[View on GitHub](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/blob/feat/changes/infrastructure/tofu/provider.tf)
 ```tf
 terraform {
   required_providers {
@@ -49,7 +49,7 @@ Create an API token:
 ![](../../media/infrastructure/tofu/pve-token.png)
 
 ### 6. Infisical Secrets
-Save that token (ID + secret) into your Infisical vault at path `/tofu` — see: [Managing Secrets for OpenTofu](../infisical/installation.md#6-managing-secrets-for-opentofu)
+Save that token (ID + secret) into your Infisical vault at path `/tofu` — see: [Managing Secrets for OpenTofu](../infisical/setup.md#6-infisical-secrets)
 
 Recommended keys in Infisical:
 - `PM_API_TOKEN_ID`: Proxmox API Token ID
@@ -70,10 +70,10 @@ infisical run --env=prod --path=/tofu -- tofu apply
 ```
 
 ### 8. State Backend
-MinIO backend details and policy setup: [MinIO Setup](../../infrastructure/minio/setup.md)
+MinIO backend details and policy setup: [MinIO Setup](../minio/setup.md)
 
-Link to a backend.tf file:
-[backend.tf](../../../infrastructure/tofu/backend.tf)
+Backend configuration (original file: `infrastructure/tofu/backend.tf`)
+[View backend.tf on GitHub](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/blob/feat/changes/infrastructure/tofu/backend.tf)
 
 ```tf
 
