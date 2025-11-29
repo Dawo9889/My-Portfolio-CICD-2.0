@@ -1,0 +1,1 @@
+https://infisical.com/docs/self-hosting/deployment-options/docker-compose
