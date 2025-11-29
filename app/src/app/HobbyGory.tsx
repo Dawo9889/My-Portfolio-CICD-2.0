@@ -33,13 +33,13 @@ export function HobbyGory() {
                 variant="h3"
                 color="blue-gray"
                 className="mb-4 font-bold lg:max-w-md">
-                2. Chodzę po górach (Beskid)
+                2. I go hiking in the mountains (Beskid)
               </Typography>
               <Typography className="mb-3 w-full lg:w-8/12 font-normal !text-gray-500">
-                Ostatnio odkryte hobby. Lubie naładować plecak sprzętem i po prostu iść przed siebie. Tak aż nogi zaczna boleć. Lubie przy tym wziąć drona, kamerę i złapać parę fajnych dla oka ujęć.
+                A recently discovered hobby. I enjoy packing a backpack with gear and walking until my legs get tired. I also like bringing a drone and camera to capture some nice shots.
               </Typography>
               <Typography variant="h6" color="blue-gray" className="mb-0.5">
-                Pare zdjęć
+                A few photos
               </Typography>
               <div className="flex items-center gap-4">
                 <Avatar

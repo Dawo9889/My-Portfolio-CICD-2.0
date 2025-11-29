@@ -44,7 +44,7 @@ export function InfoCard({ icon: Icon, title, date, children, githubLink }: Info
                 rel="noopener noreferrer"
                 className="text-blue-500 underline text-sm"
               >
-                LINK
+                View on GitHub
               </a>
             )}
         </div>

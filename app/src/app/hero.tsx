@@ -9,17 +9,16 @@ function Hero() {
         <div className="container mx-auto grid place-items-center h-max text-center">
 
           <Typography variant="h1" color="blue-gray">
-            Mój profil
+            My Profile
           </Typography>
           <Typography
             variant="lead"
             color="gray"
             className="mt-4 mb-12 w-full md:max-w-full lg:max-w-4xl"
           >
-            Witam serdecznie na mojej stronie! 
-            Znajdziesz tutaj szczegółowy opis moich doświadczeń zawodowych, umiejętności 
-            oraz informacji o tym, czym zajmuję się w wolnym czasie. 
-            Skupię się szczególnie na mojej drodze zawodowej w obszarze DevOps, którą zdecydowałem się podjąć i rozwijać.
+            Welcome to my website! Here you'll find a detailed overview of my professional experience, skills,
+            and information about my interests outside of work. I focus particularly on my career path in DevOps,
+            which I have chosen to pursue and develop.
           </Typography>
 
           {/* Add profile image under the description */}
@@ -33,16 +32,16 @@ function Hero() {
 
           {/* DevOps project section */}
           <Typography variant="h3" color="blue-gray" className="mt-4 mb-6 w-full md:max-w-full lg:max-w-4xl">
-            Projekt DevOps
+            DevOps Project
           </Typography>
           <Typography variant="lead" color="gray" className="mb-6">
-            Ta strona jest częścią mojego projektu DevOps, w ramach którego wykorzystuję różne technologie do automatyzacji i wdrożenia aplikacji w środowisku produkcyjnym.
-            Możesz zapoznać się z kodem źródłowym tego projektu na{" "}
-            <a href="https://github.com/Dawo9889/My-Portfolio-CICD" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800"> GitHubie.</a>
+            This site is part of my DevOps project, where I use various technologies to automate and deploy applications to production.
+            You can view the source code for this project on
+            <a href="https://github.com/Dawo9889/My-Portfolio-CICD-2.0" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800"> GitHub</a>.
           </Typography>
 
           <Typography className="mt-12 mb-4 text-blue-gray-900 font-medium uppercase">
-            Znajdziesz mnie na:
+            Find me on:
           </Typography>
           <div className="gap-2 lg:flex mb-20" >
             <IconButton variant="text" size = "lg" color="gray">

@@ -10,9 +10,9 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Dawid Gala - Profil",
+  title: "Dawid Gala - Profile",
   description:
-    "Profil studenta Dawid Gala. Student, który wykorzystuje tę strone nie tylko jako swoje portfolio, ale także jako aplikacje, na której testuje swoje CI/CD",
+    "Profile of Dawid Gala. A student using this site as a portfolio and as an application to test CI/CD workflows.",
 };
 
 export default function RootLayout({
