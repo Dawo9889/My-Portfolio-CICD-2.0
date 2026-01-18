@@ -22,3 +22,7 @@ jobs:
             env-slug: "dev"
             project-slug: "portfolio-cicd-l1g-g"
             identity-id: "e2c4d1b8-7a5d-4fed-96c9-a3a71369cf4c"
+            secret-path: "/tofu"
+      - name: Print env
+        run: |
+          printenv
