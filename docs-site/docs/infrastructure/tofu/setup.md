@@ -27,7 +27,7 @@ terraform {
 provider "proxmox" {
   # URL API Proxmox VE
   pm_api_url = "https://pve.dawo9889-homelab.ovh/api2/json"
-  
+
   # Rest of the authentication details are sourced from environment variables
   # PM_API_TOKEN_ID
   # PM_API_TOKEN_SECRET
@@ -83,7 +83,7 @@ terraform {
         endpoint = "https://s3.dawo9889-homelab.ovh"
         key = "portfolio-cicd.tfstate"        # Name of the tfstate file
 
-        # AWS_ACCESS_KEY_ID from env injected 
+        # AWS_ACCESS_KEY_ID from env injected
         # AWS_SECRET_ACCESS_KEY from env
 
 
@@ -92,7 +92,7 @@ terraform {
         skip_requesting_account_id = true
         skip_metadata_api_check = true
         skip_region_validation = true
-        use_path_style = true     
+        use_path_style = true
     }
 }
 ```
@@ -112,6 +112,3 @@ infisical run --env=prod --path=/tofu -- tofu init -reconfigure
 ```
 This wraps `tofu init` with environment injection, so the backend has credentials without committing them to git.
 
-
-### 9. Why this matters (CV note)
-This approach keeps credentials out of source control and makes the project easy to demo on a homelab or CV portfolio.

@@ -4,7 +4,7 @@ terraform {
         endpoint = "https://s3.dawo9889-homelab.ovh"
         key = "portfolio-cicd.tfstate"        # Name of the tfstate file
 
-        # AWS_ACCESS_KEY_ID from env injected 
+        # AWS_ACCESS_KEY_ID from env injected
         # AWS_SECRET_ACCESS_KEY from env
 
 
@@ -13,6 +13,6 @@ terraform {
         skip_requesting_account_id = true
         skip_metadata_api_check = true
         skip_region_validation = true
-        use_path_style = true     
+        use_path_style = true
     }
 }
