@@ -1,0 +1,17 @@
+name: test Infisical integration
+on:
+  workflow_dispatch:
+
+jobs:
+  test-infisical:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: Infisical/secrets-action@v1.0.7
+        with:
+            method: "oidc"
+            env-slug: "dev"
+            project-slug: "portfolio-cicd-l1g-g"
+            identity-id: "e2c4d1b8-7a5d-4fed-96c9-a3a71369cf4c"

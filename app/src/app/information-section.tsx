@@ -14,6 +14,13 @@ import { title } from "process";
 const POJECTS= [
   {
     icon: CommandLineIcon,
+    title: "Engineer Diploma Project - Deploying highly available password manager using Kubernetes in a company environment",
+    githubLink: "https://github.com/Dawo9889/engineering-thesis",
+    date: "04.2025 - 11.2025",
+    children: `DevOps project focused on deploying a High-Availability (HA) password manager application. I engineered an HA Kubernetes cluster, with instances hosted on a Proxmox HA cluster, and utilized integrated load balancing. The application is deployed via Helm, and user access is managed through NetBird VPN. This hybrid infrastructure leverages Microsoft Azure components to enhance system availability, scalability, and reliability. All development was implemented in a local environment using a budget-conscious infrastructure.`
+  },
+  {
+    icon: CommandLineIcon,
     title: "Cupid App – an application for taking and managing wedding photos.",
     githubLink: "https://github.com/Dawo9889/cupid-app",
     date: "10.2024 - 02.2025",
@@ -39,7 +46,7 @@ const POJECTS= [
     title: "My Portfolio CI/CD Project Development",
     githubLink: "https://github.com/Dawo9889/My-Portfolio-CICD",
     date: "01.2025",
-    children: "No need for a long explanation — this is the project I built and proudly present!"
+    children: "No need for a long explanation — You see in front of you the effect of this project. I created a personal portfolio website using template based on React and Material Tailwind. The main focus of the project was to implement CI/CD practices using GitHub Actions, and deploy page using pipeline ensuring automated testing and deployment with each code change."
   },
   {
     icon: CommandLineIcon,
@@ -76,43 +83,27 @@ const POJECTS= [
 const EXPERIENCE = [
   {
     icon: BriefcaseIcon,
-  title: "DevOps Intern | COIG S.A.",
-    date: "07.2024 - 10.2024",
-    children: "My main task was to get familiar with working in an IT environment within a large company. I focused on understanding workflows, cross-team collaboration, and practical DevOps practices.",
+    title: "Cloud DevOps Engineer | SAP Poland",
+    date: "07.2025 - NOW",
+    children: "I work on the Kyma open-source project as part of the DevOps team. My responsibilities include designing, implementing, and maintaining CI/CD pipelines and supporting services for development teams. I focus on automation, reliability, and improving delivery performance by writing scripts in go and python.",
+
   },
   {
     icon: BriefcaseIcon,
-  title: "DevOps Engineer | COIG S.A.",
+    title: "DevOps Engineer | COIG S.A.",
     date: "10.2024 - 05.2025",
     children: "I worked with the deployment team on tasks related to the development and maintenance of IT infrastructure. Key parts of my role included container management and orchestration. I regularly used tools like Prometheus and Grafana for monitoring and performance analysis.",
   },
   {
     icon: BriefcaseIcon,
-    title: "Cloud DevOps Engineer | SAP Poland",
-    date: "07.2025 - NOW",
-    children: "I work on the Kyma open-source project as part of the DevOps team. My responsibilities include designing, implementing, and maintaining CI/CD pipelines and supporting services for development teams. I focus on automation, reliability, and improving delivery performance.",
-
+    title: "DevOps Intern | COIG S.A.",
+    date: "07.2024 - 10.2024",
+    children: "My main task was to get familiar with working in an IT environment within a large company. I focused on understanding workflows, cross-team collaboration, and practical DevOps practices.",
   }
 ];
 
 
-const CERTIFICATES = [
-  {
-    icon: AcademicCapIcon,
-    title: "Program Corporate Readiness Certificate, ING Hubs - Cybersecurity",
-    date: "Technical Skills",
-    githubLink: "https://www.linkedin.com/in/galadawid/overlay/1717882932032/single-media-viewer/?type=DOCUMENT&profileId=ACoAAEX78IcBnWMfZ3oQfHKNwbBbkLLHPEDBZj8",
-    children:
-      "Covers approaches to corporate and commercial security. The ~40-hour course taught practical measures for protecting organizations from cyber threats.",
-  },
-    {
-    icon: AcademicCapIcon,
-    title: "Program Corporate Readiness Certificate, ING Hubs - Administrator IT",
-    date: "Technical Skills",
-    githubLink: "https://credsverse.com/credentials/78bd82ff-2a51-426b-8a2e-9cd202a82cfd",
-    children: "During the training I learned how to administer IT systems in a corporate environment."   
-  }
-];
+
 
 const SKILLS = [
   {
@@ -207,12 +198,37 @@ const SKILLS = [
     children:
       "While learning AWS, I worked with services like EC2 and S3. I focused on Amazon EKS for deploying containerized applications and managing Kubernetes clusters.",
   },
+  {
+    icon: FireIcon,
+    title: "Google Cloud Platform",
+    date: "Technical Skills",
+    children:
+      "While working with Google Cloud Platform, I focused on Secret Manager for secure storage of sensitive data and IAM for managing access permissions effectively. Also was deploying applications using containers.",
+  },
 
   {
     icon: AcademicCapIcon,
     title: "English, level B2/C1",
     date: "Soft Skills",
     children: "My English helps me at work. Reading technical documentation is comfortable; conversational skills are improving toward advanced levels.",
+  }
+];
+
+const CERTIFICATES = [
+  {
+    icon: AcademicCapIcon,
+    title: "Program Corporate Readiness Certificate, ING Hubs - Cybersecurity",
+    date: "Technical Skills",
+    githubLink: "https://www.linkedin.com/in/galadawid/overlay/1717882932032/single-media-viewer/?type=DOCUMENT&profileId=ACoAAEX78IcBnWMfZ3oQfHKNwbBbkLLHPEDBZj8",
+    children:
+      "Covers approaches to corporate and commercial security. The ~40-hour course taught practical measures for protecting organizations from cyber threats.",
+  },
+    {
+    icon: AcademicCapIcon,
+    title: "Program Corporate Readiness Certificate, ING Hubs - Administrator IT",
+    date: "Technical Skills",
+    githubLink: "https://credsverse.com/credentials/78bd82ff-2a51-426b-8a2e-9cd202a82cfd",
+    children: "During the training I learned how to administer IT systems in a corporate environment."   
   }
 ];
 
@@ -267,28 +283,6 @@ export function InformationSection() {
           </div>
         </div>
 
-      {/* Certificates section*/}
-      <div className="mb-16">
-          <Typography
-            color="blue-gray"
-            className="mb-2 text-3xl font-bold"
-          >
-            Certificates
-          </Typography>
-
-          <Typography
-            variant="lead"
-            className="!text-gray-500"
-          >
-            Some notable certificates and training.
-          </Typography>
-
-          <div className="mt-12 grid grid-cols-1 gap-16 gap-y-12">
-            {CERTIFICATES.map((props, idx) => (
-              <InfoCard key={idx} {...props} />
-            ))}
-          </div>
-        </div>
         {/* SKILLS Section */}
         <div>
           <Typography
@@ -311,7 +305,34 @@ export function InformationSection() {
             ))}
           </div>
         </div>
+
+
+
+      {/* Certificates section*/}
+      <div className="mb-16 mt-20">
+          <Typography
+            color="blue-gray"
+            className="mb-2 text-3xl font-bold"
+          >
+            Certificates
+          </Typography>
+
+          <Typography
+            variant="lead"
+            className="!text-gray-500"
+          >
+            Some notable certificates and training.
+          </Typography>
+
+          <div className="mt-12 grid grid-cols-1 gap-16 gap-y-12">
+            {CERTIFICATES.map((props, idx) => (
+              <InfoCard key={idx} {...props} />
+            ))}
+          </div>
+        </div>
       </div>
+
+
       <div className="container mx-auto mt-20 text-center">
           <Typography variant="h2" color="blue-gray" className="mb-4">
             What I do in my free time
