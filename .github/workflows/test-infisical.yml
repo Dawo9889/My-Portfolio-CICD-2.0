@@ -9,8 +9,11 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+
+      - name: Debug OIDC Claims
+        uses: steve-todorov/oidc-debugger-action@v1
+        with:
+          audience: '${{ github.server_url }}/${{ github.repository }}'
 
       - uses: Infisical/secrets-action@v1.0.7
         with:
