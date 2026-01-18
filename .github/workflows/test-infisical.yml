@@ -11,6 +11,7 @@ jobs:
 
       - uses: Infisical/secrets-action@v1.0.7
         with:
+            domain: "https://infisical.dawo9889-homelab.ovh"
             method: "oidc"
             env-slug: "dev"
             project-slug: "portfolio-cicd-l1g-g"
