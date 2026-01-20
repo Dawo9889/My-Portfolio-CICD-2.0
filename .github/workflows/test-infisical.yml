@@ -17,12 +17,16 @@ jobs:
 
       - uses: Infisical/secrets-action@v1.0.7
         with:
-            domain: "https://infisical.dawo9889-homelab.ovh"
-            method: "oidc"
-            env-slug: "dev"
-            project-slug: "portfolio-cicd-l1g-g"
-            identity-id: "e2c4d1b8-7a5d-4fed-96c9-a3a71369cf4c"
-            secret-path: "/tofu"
-      - name: Print env
+          domain: "https://infisical.dawo9889-homelab.ovh"
+          method: "oidc"
+          env-slug: "dev"
+          project-slug: "portfolio-cicd-l1g-g"
+          identity-id: "e2c4d1b8-7a5d-4fed-96c9-a3a71369cf4c"
+          secret-path: "/private_keys"
+      - name: Run SSH command
+        env:
+          SSH_KEY: ${{ env.PORTFOLIO_CICD_SSH_KEY }}
         run: |
-          printenv
+          echo "$SSH_KEY" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@192.168.1.16 'ip a'
