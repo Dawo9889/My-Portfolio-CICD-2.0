@@ -27,6 +27,6 @@ jobs:
         env:
           SSH_KEY: ${{ env.PORTFOLIO_CICD_SSH_KEY }}
         run: |
-          echo "$SSH_KEY" > private_key.pem
+          printf "%s\n" "${{ env.PORTFOLIO_CICD_SSH_KEY }}" > ~/.ssh/private_key.pem
           chmod 600 private_key.pem
           ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@192.168.1.16 'ip a'
