@@ -41,7 +41,7 @@ export function HobbyScianka() {
             {/* Text section */}
             <div className="w-full mb-10 lg:mb-0">
               <TypographyAny variant="h3" color="blue-gray" className="mb-4 font-bold lg:max-w-xs">
-                3. Indoor climbing
+                3. Climbing (indoor & rock)
               </TypographyAny>
               <TypographyAny className="mb-3 w-full lg:w-8/12 font-normal !text-gray-500">
                 Indoor climbing is a great way for me to improve strength, technique, and focus. I started with bouldering, and gradually moved to rope climbing. It requires concentration, planning, and good teamwork with a belay partner — skills that translate to other areas of life as well.
