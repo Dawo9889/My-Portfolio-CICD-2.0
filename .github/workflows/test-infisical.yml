@@ -1,4 +1,4 @@
-name: test Infisical integration
+name: Tofu Deploy
 on:
   workflow_dispatch:
 
@@ -12,6 +12,9 @@ jobs:
       run:
         working-directory: ./infrastructure/tofu
     steps:
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+
       - uses: Infisical/secrets-action@v1.0.7
         with:
           domain: "https://infisical.dawo9889-homelab.ovh"
