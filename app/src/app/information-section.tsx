@@ -26,7 +26,7 @@ const POJECTS= [
     date: "10.2024 - 02.2025",
     children: (
       <>
-        A collaborative project with three friends to create a wedding app available on both web and mobile.
+        A collaborative project with two friends to create a wedding app available on both web and mobile.
         The app allows photographers to access photos from a different perspective — wedding guests can take and share photos in real time,
         showcasing the event from their point of view.
         <br></br>
