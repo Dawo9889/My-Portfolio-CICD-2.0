@@ -1,0 +1,26 @@
+---
+- name: Deploy Docker app on remote server
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure Docker Service is running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Pull and run Docker container
+      community.docker.docker_container:
+        name: portfolio-cicd
+        image: ghcr.io/dawo9889/my-portfolio-cicd-2.0:latest
+        state: started
+        restart_policy: always
+        published_ports:
+          - "3000:3000"
+        pull: true # Automatically pulls if a newer image exists
+
+    - name: Cleanup workspace
+      if: always()
+      run: |
+        echo "Cleaning up..."
+        rm -rf ${{ github.workspace }}/*

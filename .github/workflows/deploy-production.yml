@@ -1,0 +1,38 @@
+name: Deploy to Production
+
+on:
+  # push:
+  #   branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
+    defaults:
+      run:
+        working-directory: infrastructure/ansible
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PORTFOLIO_CICD_SSH_KEY }}" > ./keys/portfolio-cicd-key.pem
+          chmod 600 ./keys/portfolio-cicd-key.pem
+      - name: Install Ansible Dependencies
+        run: |
+          pip install ansible
+          ansible-galaxy collection install community.docker
+
+      - name: Run Ansible Playbook to deploy Docker app
+        run: |
+            ansible-playbook -i inventory.ini deploy-docker.yml
+
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          echo "Cleaning up..."
+          rm -rf ${{ github.workspace }}/*

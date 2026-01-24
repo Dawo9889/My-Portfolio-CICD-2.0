@@ -17,10 +17,11 @@ variable "vm_config" {
     cloud_init_template = "ubuntu-2404-cloudinit"
     vm_memory           = 2048
     vm_cores            = 2
-    vm_state            = "started"
+    vm_state            = "running"
     vm_ip               = "ip=192.168.1.16/24,gw=192.168.1.1"
     bridge              = "vmbr0"
     mac_address         = "bc:24:11:0b:ec:8f"
-    ssh_keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILhKpbWy7VPP7p7CL0/DdNtrWHnTTogaAfXmNegECbJZ For automation" ]
+    ssh_keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILhKpbWy7VPP7p7CL0/DdNtrWHnTTogaAfXmNegECbJZ For automation",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOr8v8hH7uRo84P2MsW6w+KPnwMEYx39T3akgWT7JwJg portfolio-cicd key"]
   }
 }
