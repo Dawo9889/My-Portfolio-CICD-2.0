@@ -12,7 +12,7 @@
     - name: Pull and run Docker container
       community.docker.docker_container:
         name: portfolio-cicd
-        image: {{ image | default('ghcr.io/dawo9889/my-portfolio-cicd-2.0:latest') }}
+        image: "{{ image | default('ghcr.io/dawo9889/my-portfolio-cicd-2.0:latest') }}"
         state: started
         restart_policy: always
         published_ports:
