@@ -41,5 +41,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/Dawo9889/my-portfolio-cicd-2.0:latest:latest
+            ghcr.io/Dawo9889/my-portfolio-cicd-2.0:latest
             ghcr.io/Dawo9889/my-portfolio-cicd-2.0:${{ github.sha }}
