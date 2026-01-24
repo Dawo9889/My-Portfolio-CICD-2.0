@@ -34,7 +34,7 @@ jobs:
       - name: Run Ansible Playbooks
         run: |
           ansible-playbook -i inventory.ini setup-docker.yml
-          ansible-playbook -i inventory.ini deploy-docker.yml -e "image_tag=${{ inputs.image }}"
+          ansible-playbook -i inventory.ini deploy-docker.yml -e "image=${{ inputs.image }}"
 
       - name: Cleanup workspace
         if: always()
