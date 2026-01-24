@@ -24,12 +24,6 @@ jobs:
           echo "${{ secrets.PORTFOLIO_CICD_SSH_KEY }}" > keys/portfolio-cicd-key.pem
           chmod 600 keys/portfolio-cicd-key.pem
 
-      - name: Install Ansible Dependencies
-        run: |
-          pip install ansible --break-system-packages
-          ansible-galaxy collection install community.docker
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-
       - name: Authenticate to ghcr
         run: |
           echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
