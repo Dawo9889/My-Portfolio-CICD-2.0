@@ -34,7 +34,7 @@ export function HobbyRower() {
                   alt="Avatar roweru"
                   size="xl"
                   className={`cursor-pointer ${active === 1 ? "opacity-100" : "opacity-50"}`}
-                  onClick={() => setActive(1)}                
+                  onClick={() => setActive(1)}
                   />
                 <div className="w-[1px] h-[36px] bg-blue-gray-100 "></div>
                 <Avatar
@@ -43,7 +43,7 @@ export function HobbyRower() {
                   alt="Avatar roweru"
                   size="xl"
                   className={`cursor-pointer ${active === 2 ? "opacity-100" : "opacity-50"}`}
-                  onClick={() => setActive(2)}                
+                  onClick={() => setActive(2)}
                   />
                 <div className="w-[1px] h-[36px] bg-blue-gray-100" />
                 <Avatar
@@ -52,7 +52,7 @@ export function HobbyRower() {
                   alt="Avatar roweru"
                   size="xl"
                   className={`cursor-pointer ${active === 3 ? "opacity-100" : "opacity-50"}`}
-                  onClick={() => setActive(3)}                
+                  onClick={() => setActive(3)}
                   />
                   <div className="w-[1px] h-[36px] bg-blue-gray-100" />
                 <Avatar
@@ -61,7 +61,7 @@ export function HobbyRower() {
                   alt="Avatar roweru"
                   size="xl"
                   className={`cursor-pointer ${active === 3 ? "opacity-100" : "opacity-50"}`}
-                  onClick={() => setActive(4)}                
+                  onClick={() => setActive(4)}
                 />
               </div>
             </div>

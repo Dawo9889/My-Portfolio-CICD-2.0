@@ -14,7 +14,7 @@ variable "vm_config" {
   default = {
     target_node         = "pve"
     vm_name             = "portfolio-cicd"
-    cloud_init_template = "ubuntu-cloud"
+    cloud_init_template = "ubuntu-2404-cloudinit"
     vm_memory           = 2048
     vm_cores            = 2
     vm_state            = "started"

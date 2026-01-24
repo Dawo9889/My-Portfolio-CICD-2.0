@@ -20,9 +20,14 @@ jobs:
           domain: "https://infisical.dawo9889-homelab.ovh"
           method: "oidc"
           env-slug: "dev"
-          project-slug: "portfolio-cicd-l1g-g"
-          identity-id: "e2c4d1b8-7a5d-4fed-96c9-a3a71369cf4c"
-          secret-path: "/private_keys"
+          project-slug: "portfolio-cicd-r-shw"
+          identity-id: "5889a899-c926-4e4d-aed7-a6af89855305"
+          secret-path: "/tofu"
+
+      - name: print environment variables
+        run: |
+          env
+
       - name: Test ssh script
         uses: appleboy/ssh-action@v1.0.3
         with:
