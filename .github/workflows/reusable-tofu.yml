@@ -1,9 +1,11 @@
-name: Tofu Deploy
+name: Reusable Tofu Deploy
+
 on:
+  workflow_call:
   workflow_dispatch:
 
 jobs:
-  tofu-deploy:
+  terraform:
     runs-on: self-hosted
     permissions:
       id-token: write
@@ -20,7 +22,8 @@ jobs:
         with:
           node-version: 'latest'
 
-      - uses: Infisical/secrets-action@v1.0.7
+      - name: Fetch secrets from Infisical
+        uses: Infisical/secrets-action@v1.0.7
         with:
           domain: "https://infisical.dawo9889-homelab.ovh"
           method: "oidc"
@@ -47,7 +50,6 @@ jobs:
       - name: Tofu Apply
         run: |
           tofu apply -input=false -no-color -auto-approve tfplan
-
 
       - name: Cleanup workspace
         if: always()

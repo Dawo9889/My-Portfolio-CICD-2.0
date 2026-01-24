@@ -1,22 +1,18 @@
-name: Build and push Docker image
+name: Reusable Build
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'app/**'
-      - 'Dockerfile'
-  workflow_dispatch:
-
-
-permissions:
-  contents: read
-  packages: write
+  workflow_call:
+    outputs:
+      image:
+        description: 'Docker image tag'
+        value: ${{ steps.set_image.outputs.image }}
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
+
+    outputs:
+      image: ${{ steps.set_image.outputs.image }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -43,3 +39,10 @@ jobs:
           tags: |
             ghcr.io/dawo9889/my-portfolio-cicd-2.0:latest
             ghcr.io/dawo9889/my-portfolio-cicd-2.0:${{ github.sha }}
+
+      - name: Set output image
+        id: set_image
+        run: |
+          echo "image=ghcr.io/dawo9889/my-portfolio-cicd-2.0:${{ github.sha }}" >> $GITHUB_OUTPUT
+
+

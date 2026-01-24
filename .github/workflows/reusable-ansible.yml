@@ -1,0 +1,47 @@
+name: Reusable Ansible Deploy
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
+    defaults:
+      run:
+        working-directory: infrastructure/ansible
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up SSH Key
+        run: |
+          mkdir -p keys
+          echo "${{ secrets.PORTFOLIO_CICD_SSH_KEY }}" > keys/portfolio-cicd-key.pem
+          chmod 600 keys/portfolio-cicd-key.pem
+
+      - name: Authenticate to ghcr (optional for runner)
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Run Ansible Playbooks
+        run: |
+          if [ -n "${{ inputs.image }}" ]; then
+            ansible-playbook -i inventory.ini setup-docker.yml -e "image_tag=${{ inputs.image }}"
+            ansible-playbook -i inventory.ini deploy-docker.yml -e "image_tag=${{ inputs.image }}"
+          else
+            ansible-playbook -i inventory.ini setup-docker.yml
+            ansible-playbook -i inventory.ini deploy-docker.yml
+          fi
+
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          echo "Cleaning up..."
+          rm -rf ${{ github.workspace }}/*

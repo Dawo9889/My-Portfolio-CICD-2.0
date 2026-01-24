@@ -1,40 +1,17 @@
-name: Deploy to Production
+name: Deploy to Production (orchestrator)
 
 on:
-  # push:
-  #   branches: [ main ]
   workflow_dispatch:
 
 jobs:
+  build:
+    uses: ./.github/workflows/reusable-build.yml
+
+  terraform:
+    uses: ./.github/workflows/reusable-tofu.yml
+
   deploy:
-    runs-on: self-hosted
-    permissions:
-      contents: read
-      packages: write
-    defaults:
-      run:
-        working-directory: infrastructure/ansible
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Set up SSH Key
-        run: |
-          mkdir -p keys
-          echo "${{ secrets.PORTFOLIO_CICD_SSH_KEY }}" > keys/portfolio-cicd-key.pem
-          chmod 600 keys/portfolio-cicd-key.pem
-
-      - name: Authenticate to ghcr
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Run Ansible Playbook to deploy Docker app
-        run: |
-            ansible-playbook -i inventory.ini setup-docker.yml
-            ansible-playbook -i inventory.ini deploy-docker.yml
-
-      - name: Cleanup workspace
-        if: always()
-        run: |
-          echo "Cleaning up..."
-          rm -rf ${{ github.workspace }}/*
+    needs: [build, terraform]
+    uses: ./.github/workflows/reusable-ansible.yml
+    with:
+      image: ${{ needs.build.outputs.image }}
