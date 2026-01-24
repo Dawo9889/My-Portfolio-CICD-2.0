@@ -24,15 +24,11 @@ jobs:
           identity-id: "5889a899-c926-4e4d-aed7-a6af89855305"
           secret-path: "/tofu"
 
-      - name: print environment variables
-        run: |
-          env
-
-      - name: Test ssh script
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: 192.168.1.16
-          username: ubuntu
-          key: ${{ secrets.PORTFOLIO_CICD_SSH_KEY }}
-          script: |
-            ip a
+      # - name: Test ssh script
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: 192.168.1.16
+      #     username: ubuntu
+      #     key: ${{ secrets.PORTFOLIO_CICD_SSH_KEY }}
+      #     script: |
+      #       ip a
