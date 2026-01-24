@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Install Node.js
         uses: actions/setup-node@v6
+        with:
+          node-version: 'latest'
 
       - uses: Infisical/secrets-action@v1.0.7
         with:
