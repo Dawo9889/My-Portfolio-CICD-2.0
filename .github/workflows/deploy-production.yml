@@ -20,6 +20,7 @@ jobs:
 
       - name: Set up SSH Key
         run: |
+          mkdir -p keys
           echo "${{ secrets.PORTFOLIO_CICD_SSH_KEY }}" > keys/portfolio-cicd-key.pem
           chmod 600 keys/portfolio-cicd-key.pem
 
