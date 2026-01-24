@@ -3,18 +3,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-infisical:
+  tofu-deploy:
     runs-on: self-hosted
     permissions:
       id-token: write
       contents: read
+    defaults:
+      run:
+        working-directory: ./infrastructure/tofu
     steps:
-
-      - name: Debug OIDC Claims
-        uses: steve-todorov/oidc-debugger-action@v1
-        with:
-          audience: '${{ github.server_url }}/${{ github.repository }}'
-
       - uses: Infisical/secrets-action@v1.0.7
         with:
           domain: "https://infisical.dawo9889-homelab.ovh"
@@ -24,11 +21,21 @@ jobs:
           identity-id: "5889a899-c926-4e4d-aed7-a6af89855305"
           secret-path: "/tofu"
 
-      # - name: Test ssh script
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: 192.168.1.16
-      #     username: ubuntu
-      #     key: ${{ secrets.PORTFOLIO_CICD_SSH_KEY }}
-      #     script: |
-      #       ip a
+      - name: Setup tofu
+        uses: opentofu/setup-opentofu@v1
+
+      - name: Initialize tofu
+        run: |
+          tofu init -input=false
+
+      - name: Validate tofu
+        run: |
+          tofu validate
+
+      - name: Plan tofu
+        run: |
+          tofu plan -out=tfplan
+
+      - name: Tofu Apply
+        run: |
+          tofu apply -input=false -no-color -auto-approve tfplan
