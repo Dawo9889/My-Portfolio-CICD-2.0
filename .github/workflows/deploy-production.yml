@@ -30,6 +30,7 @@ jobs:
 
       - name: Run Ansible Playbook to deploy Docker app
         run: |
+            ansible-playbook -i inventory.ini setup-docker.yml
             ansible-playbook -i inventory.ini deploy-docker.yml
 
       - name: Cleanup workspace
