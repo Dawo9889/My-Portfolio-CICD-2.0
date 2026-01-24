@@ -17,10 +17,4 @@
         restart_policy: always
         published_ports:
           - "3000:3000"
-        pull: true # Automatically pulls if a newer image exists
-
-    - name: Cleanup workspace
-      if: always()
-      run: |
-        echo "Cleaning up..."
-        rm -rf ${{ github.workspace }}/*
+        pull: true
