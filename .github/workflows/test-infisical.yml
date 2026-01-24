@@ -12,6 +12,9 @@ jobs:
       run:
         working-directory: ./infrastructure/tofu
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
@@ -44,3 +47,10 @@ jobs:
       - name: Tofu Apply
         run: |
           tofu apply -input=false -no-color -auto-approve tfplan
+
+
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          echo "Cleaning up..."
+          rm -rf ${{ github.workspace }}/*
