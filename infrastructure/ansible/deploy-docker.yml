@@ -18,3 +18,4 @@
         published_ports:
           - "3000:3000"
         pull: true
+        memory: 512m
