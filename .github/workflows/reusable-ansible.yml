@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  deploy:
+  deploy-docker-app:
     runs-on: self-hosted
     permissions:
       contents: read

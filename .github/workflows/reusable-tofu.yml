@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  terraform:
+  tofu-provide-vm:
     runs-on: self-hosted
     permissions:
       id-token: write

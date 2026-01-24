@@ -5,10 +5,10 @@ on:
     outputs:
       image:
         description: 'Docker image tag'
-        value: ${{ jobs.build.outputs.image }}
+        value: ${{ jobs.build-docker-image.outputs.image }}
 
 jobs:
-  build:
+  build-docker-image:
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.set_image.outputs.image }}
