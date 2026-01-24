@@ -28,6 +28,7 @@ jobs:
         run: |
           pip install ansible --break-system-packages
           ansible-galaxy collection install community.docker
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Authenticate to ghcr
         run: |
