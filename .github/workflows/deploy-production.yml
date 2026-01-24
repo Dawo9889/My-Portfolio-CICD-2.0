@@ -13,7 +13,7 @@ jobs:
       packages: write
     defaults:
       run:
-        working-directory: infrastructure/ansible
+        working-directory: ${{ github.workspace }}/infrastructure/ansible
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
