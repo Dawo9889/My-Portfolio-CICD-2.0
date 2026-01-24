@@ -19,7 +19,7 @@ jobs:
         with:
           domain: "https://infisical.dawo9889-homelab.ovh"
           method: "oidc"
-          env-slug: "dev"
+          env-slug: "prod"
           project-slug: "portfolio-cicd-r-shw"
           identity-id: "5889a899-c926-4e4d-aed7-a6af89855305"
           secret-path: "/tofu"
