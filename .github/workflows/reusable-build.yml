@@ -5,14 +5,14 @@ on:
     outputs:
       image:
         description: 'Docker image tag'
-        value: ${{ steps.set_image.outputs.image }}
+        value: ${{ jobs.build.outputs.image }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     outputs:
       image: ${{ steps.set_image.outputs.image }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
