@@ -12,10 +12,10 @@ variable "vm_config" {
     ssh_keys            = list(string)
   })
   default = {
-    target_node         = "pve"
+    target_node         = "pve2"
     vm_name             = "portfolio-cicd"
     cloud_init_template = "ubuntu-2404-cloudinit"
-    vm_memory           = 2048
+    vm_memory           = 1024
     vm_cores            = 2
     vm_state            = "running"
     vm_ip               = "ip=192.168.1.16/24,gw=192.168.1.1"
