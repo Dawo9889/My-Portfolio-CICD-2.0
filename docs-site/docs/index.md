@@ -1,65 +1,123 @@
-# Homelab Infrastructure & CI/CD Portfolio
+# Portfolio CICD 2.0 - Project Overview
 
-This site documents the infrastructure stack I built to showcase secure, reproducible automation in my homelab. It’s intentionally close to real-world patterns (secrets management, state separation, least-privilege) while remaining lightweight and easy to reason about.
+## What This Project Is
 
-## What This Project Demonstrates
-- Secrets lifecycle with **Infisical** (no hardcoded creds, runtime injection)
-- S3-compatible remote state via **MinIO** (shared automation access)
-- Infrastructure plans with **OpenTofu/Terraform** targeting **Proxmox VE**
-- Separation of concerns: provider config, secret injection, state backend
+A portfolio website built with Next.js, deployed with a complete self-hosted CI/CD pipeline in my homelab. This demonstrates practical DevOps skills using real infrastructure.
 
-## Stack Overview
-| Layer | Tool | Purpose |
-|-------|------|---------|
-| Compute / Virtualization | Proxmox VE | Hosts VMs/containers for services |
-| Secrets | Infisical | Central vault + CLI injection |
-| State Backend | MinIO | S3 bucket for remote tfstate |
-| IaC Engine | OpenTofu | Declarative infra provisioning |
-| Docs | MkDocs Material | Static portfolio documentation |
+## What I Accomplished
 
-## High-Level Flow
-1. I create/update secrets in Infisical (`/tofu` path).
-2. Run infra commands wrapped with `infisical run` so environment vars populate.
-3. OpenTofu uses the injected creds to talk to Proxmox and MinIO.
-4. State persists remotely in the MinIO bucket (`terraform-states`).
-5. Changes + rationale are documented here for reviewers (CV / portfolio).
+### The Application
+- Built a responsive portfolio website with Next.js 15 and Tailwind CSS
+- Containerized with Docker for consistent deployments
+- Automated builds and testing with GitHub Actions
+
+### The Infrastructure
+- **Proxmox VM** - Provisioned Ubuntu VM automatically with OpenTofu
+- **Secrets Management** - Self-hosted Infisical vault (no hardcoded credentials)
+- **State Storage** - MinIO S3-compatible backend for Terraform state
+- **Configuration** - Ansible playbook to install Docker and dependencies
+- **CI/CD** - Self-hosted GitHub Actions runner on the VM
+
+## The Complete Flow
 
 ```mermaid
-flowchart LR
-    Dev[Local Dev Shell] -->|infisical run| Env[Ephemeral Env Vars]
-    Env --> Tofu[OpenTofu]
-    Tofu --> Proxmox[Proxmox VE API]
-    Tofu --> MinIO[(MinIO S3 Bucket)]
-    Infisical[(Infisical Vault)] --> Env
+flowchart TB
+    Dev[Developer: Push Code] --> GitHub[GitHub Repository]
+    GitHub -->|Webhook| Runner[Self-Hosted Runner<br/>Ubuntu VM]
+
+    Runner -->|Fetch Secrets| Infisical[(Infisical Vault)]
+    Runner -->|Build & Test| Docker[Docker Engine]
+
+    Infisical -.->|Credentials| Runner
+
+    Docker -->|Run Container| App[Next.js App]
+
+    subgraph "Infrastructure Setup"
+        Tofu[OpenTofu]
+        Tofu -->|Provisions| VM[Proxmox VM]
+        Tofu -->|Reads State| MinIO[(MinIO S3)]
+        Ansible -->|Configures| VM
+    end
+
+    VM -.->|Hosts| Runner
+    VM -.->|Hosts| Docker
 ```
 
-## Key Design Choices
-- Runtime injection avoids accidental credential commits.
-- Separate MinIO user/policy for Terraform state limits blast radius.
-- Proxmox role scoped for Terraform operations only (least privilege).
-- Plain Markdown docs + MkDocs: fast iteration, readable diffs.
+## How It Works
 
-## Jump In
-- Remote State & Backend: [MinIO Setup](infrastructure/minio/setup.md)
-- Secrets & Injection: [Infisical Setup](infrastructure/infisical/setup.md)
-- Provisioning Flow: [OpenTofu Setup](infrastructure/tofu/setup.md)
+### Development Workflow
+1. I push code to GitHub
+2. GitHub triggers the self-hosted runner on my VM
+3. Runner fetches secrets from Infisical using OIDC authentication
+4. Runs tests and builds the Docker image
+5. If tests pass, the app can be deployed
 
-## Quick Start Commands
-```bash
-# Serve docs locally
-mkdocs serve
+### Infrastructure Management
+1. Secrets are stored in self-hosted Infisical
+2. OpenTofu code provisions VMs on Proxmox
+3. State files stored remotely in MinIO (S3-compatible)
+4. Ansible configures VMs with Docker and dependencies
+5. GitHub Actions runner installed as a systemd service
 
-# Inject secrets and plan infra
-infisical run --env=prod --path=/tofu -- tofu plan
+## Key Features
+
+**No Hardcoded Secrets**
+- All credentials in Infisical vault
+- Runtime injection with `infisical run`
+- OIDC authentication for GitHub Actions
+
+**Infrastructure as Code**
+- VM defined in OpenTofu/Terraform
+- Configuration managed with Ansible
+- Repeatable and documented
+
+**Self-Hosted CI/CD**
+- GitHub Actions runner on my own hardware
+- Full control over build environment
+- Access to private network resources
+
+**Containerized App**
+- Multi-stage Docker build for optimization
+- Runs consistently across environments
+- Easy to deploy and scale
+
+## Documentation
+
+Detailed setup guides for each component:
+
+- **[How I Set This Up](setup-process.md)** - My journey setting up this project
+- [MinIO Setup](infrastructure/minio/setup.md) - S3-compatible storage for Terraform state
+- [Infisical Setup](infrastructure/infisical/setup.md) - Self-hosted secrets management
+- [OpenTofu Setup](infrastructure/tofu/setup.md) - Infrastructure provisioning with IaC
+
+## Tech Stack
+
+- **Frontend:** Next.js 15, React 18, TypeScript, Tailwind CSS
+- **Infrastructure:** Proxmox VE, OpenTofu, Ansible
+- **Secrets:** Infisical (self-hosted)
+- **Storage:** MinIO (S3-compatible)
+- **CI/CD:** GitHub Actions (self-hosted runner)
+- **Container:** Docker
+
+## Project Structure
+
 ```
-
-## Next Ideas / Roadmap
-- Add CI pipeline using service tokens (GitHub Actions)
-- VM provisioning examples (network, storage templates)
-- Automated secret rotation script
-- MinIO lifecycle policies for state archival
-
-## Contact / Review Notes
-Feel free to browse the repo on GitHub: https://github.com/Dawo9889/My-Portfolio-CICD-2.0
-
-> This documentation is intentionally narrative: each decision highlights security, reproducibility, and clarity—things I value when designing infrastructure.
+My-Portfolio-CICD-2.0/
+├── app/                    # Next.js application
+│   ├── src/               # Source code
+│   ├── public/            # Static assets
+│   └── package.json       # Dependencies
+├── infrastructure/
+│   ├── tofu/              # OpenTofu/Terraform code
+│   │   ├── provider.tf    # Proxmox provider
+│   │   ├── backend.tf     # MinIO S3 backend
+│   │   └── cloud-init.tf  # VM definition
+│   └── ansible/           # Configuration management
+│       ├── inventory.ini   # Host inventory
+│       └── setup-docker.yml # Docker installation
+├── .github/workflows/     # CI/CD pipelines
+│   ├── pr-ci.yml         # PR validation
+│   └── test-infisical.yml # Secret injection test
+├── Dockerfile            # Multi-stage app build
+└── docs-site/           # This documentation
+```
