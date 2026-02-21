@@ -9,8 +9,8 @@ resource "proxmox_vm_qemu" "cloud-init" {
   os_type = "cloud-init"
   memory  = var.vm_config.vm_memory
 
-  onboot  = true
-  startup = "order=1,up=10,down=10"
+  start_at_node_boot = true
+
 
   agent = 1
 
@@ -56,5 +56,11 @@ resource "proxmox_vm_qemu" "cloud-init" {
     }
   }
   tags = "portfolio-cicd" # Set to empty string explicitly
+
+  startup_shutdown {
+    order            = -1
+    shutdown_timeout = -1
+    startup_delay    = -1
+  }
 
 }

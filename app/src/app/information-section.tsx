@@ -16,7 +16,7 @@ const POJECTS= [
     icon: CommandLineIcon,
     title: "Engineer Diploma Project - Deploying highly available password manager using Kubernetes in a company environment",
     githubLink: "https://github.com/Dawo9889/engineering-thesis",
-    date: "04.2025 - 11.2025",
+    date: "04.2025 - 01.2026",
     children: `DevOps project focused on deploying a High-Availability (HA) password manager application. I engineered an HA Kubernetes cluster, with instances hosted on a Proxmox HA cluster, and utilized integrated load balancing. The application is deployed via Helm, and user access is managed through NetBird VPN. This hybrid infrastructure leverages Microsoft Azure components to enhance system availability, scalability, and reliability. All development was implemented in a local environment using a budget-conscious infrastructure.`
   },
   {
@@ -26,7 +26,7 @@ const POJECTS= [
     date: "10.2024 - 02.2025",
     children: (
       <>
-        A collaborative project with three friends to create a wedding app available on both web and mobile.
+        A collaborative project with two friends to create a wedding app available on both web and mobile.
         The app allows photographers to access photos from a different perspective — wedding guests can take and share photos in real time,
         showcasing the event from their point of view.
         <br></br>
@@ -228,7 +228,7 @@ const CERTIFICATES = [
     title: "Program Corporate Readiness Certificate, ING Hubs - Administrator IT",
     date: "Technical Skills",
     githubLink: "https://credsverse.com/credentials/78bd82ff-2a51-426b-8a2e-9cd202a82cfd",
-    children: "During the training I learned how to administer IT systems in a corporate environment."   
+    children: "During the training I learned how to administer IT systems in a corporate environment."
   }
 ];
 

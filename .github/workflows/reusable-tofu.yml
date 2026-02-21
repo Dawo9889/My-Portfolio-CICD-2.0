@@ -1,0 +1,58 @@
+name: Reusable Tofu Deploy
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  tofu-provide-vm:
+    runs-on: self-hosted
+    permissions:
+      id-token: write
+      contents: read
+    defaults:
+      run:
+        working-directory: ./infrastructure/tofu
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 'latest'
+
+      - name: Fetch secrets from Infisical
+        uses: Infisical/secrets-action@v1.0.7
+        with:
+          domain: "https://infisical.dawo9889-homelab.ovh"
+          method: "oidc"
+          env-slug: "prod"
+          project-slug: "portfolio-cicd-r-shw"
+          identity-id: "5889a899-c926-4e4d-aed7-a6af89855305"
+          secret-path: "/tofu"
+
+      - name: Setup tofu
+        uses: opentofu/setup-opentofu@v1
+
+      - name: Initialize tofu
+        run: |
+          tofu init -input=false
+
+      - name: Validate tofu
+        run: |
+          tofu validate
+
+      - name: Plan tofu
+        run: |
+          tofu plan -out=tfplan
+
+      - name: Tofu Apply
+        run: |
+          tofu apply -input=false -no-color -auto-approve tfplan
+
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          echo "Cleaning up..."
+          rm -rf ${{ github.workspace }}/*
