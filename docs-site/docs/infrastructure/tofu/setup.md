@@ -98,6 +98,7 @@ terraform {
 ```
 
 What this does:
+
 - `bucket`: Points to your MinIO bucket name (`terraform-states`).
 - `endpoint`: Your MinIO S3 URL. Use `http://<host>:9000` if no TLS; use `https://...` behind a reverse proxy.
 - `key`: Path/name of the state file inside the bucket (organize by project/environment).
