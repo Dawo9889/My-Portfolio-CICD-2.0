@@ -1,15 +1,16 @@
-**Infisical Self-Hosted Installation & Usage Guide**
+# Infisical Self-Hosted Setup
 
-This document explains how to deploy Infisical with Docker Compose and integrate it with OpenTofu/Terraform for secret injection.
+How I set up Infisical for managing secrets in this project.
 
----
-### 1. Overview
-Infisical is an open-source secret management platform. Self-hosting gives full control over data, encryption keys, and access policies. This setup uses Postgres + Redis + Infisical backend.
+## What It Is
+
+Infisical is an open-source secrets vault. Self-hosting it means I control where the data lives and who has access to it. This setup uses Postgres for storage and Redis for caching.
 
 Reference: https://infisical.com/docs/self-hosting/deployment-options/docker-compose
 
-### 2. Docker Compose File
-Save as `docker-compose.yml`:
+## Docker Compose Setup
+
+Save this as `docker-compose.yml`:
 ```yaml
 version: "3"
 services:
@@ -65,10 +66,11 @@ networks:
   infisical:
 ```
 
+I'm exposing port 80 on the host, but in production you'd want to put this behind a reverse proxy with HTTPS.
 
----
-### 3. Environment Variables (.env)
-Create a `.env` file next to the compose file:
+## Environment Variables
+
+Create a `.env` file in the same directory:
 ```dotenv
 # Encryption key (16 bytes hex => 32 hex chars)
 ENCRYPTION_KEY=REPLACE_ME
@@ -89,95 +91,112 @@ REDIS_URL=redis://redis:6379
 SITE_URL=https://infisical.example.com
 ```
 
-DO NOT use sample values in production. Store originals in a secure password manager or hardware vault.
+**Important:** Don't use these sample values in production. Generate actual secure keys and store the originals somewhere safe.
 
----
-### 4. Generating Required Keys
+## Generating Keys
+
 ```bash
-# 16-byte hex (32 hex chars) for ENCRYPTION_KEY
+# 16-byte hex (32 characters) for ENCRYPTION_KEY
 openssl rand -hex 16
 
 # 32-byte base64 for AUTH_SECRET
 openssl rand -base64 32
 ```
 
----
-Start services:
+## Starting It Up
+
 ```bash
 docker compose up -d
 ```
 
-### 5. Initial Application Setup
-Visit `http://<HOST>` (or behind HTTPS reverse proxy) and create your first organization/project.
+## Initial Setup
 
-![Infisical Project Creation – initial onboarding](../../media/infrastructure/infisical/create-project.png)
+Visit the URL (either `http://<HOST>` or behind your HTTPS proxy) and create your first organization and project.
 
-Create environments (e.g., `dev`, `prod`) and define secret paths.
+![Initial project creation](../../media/infrastructure/infisical/create-project.png)
 
----
-### 6. Managing Secrets for OpenTofu
-Create a folder/path in Infisical for your Tofu project (e.g., `/tofu`). Add required secrets (provider credentials, backend configs, etc.).
+Create environments (like `dev` and `prod`) and define paths where secrets will live.
 
-![Infisical Secret Management – OpenTofu path](../../media/infrastructure/infisical/tofu-secrets.png)
+## Storing OpenTofu Secrets
 
+Create a path in Infisical for your Tofu/Terraform secrets (I use `/tofu`). Add the secrets that OpenTofu needs - provider credentials, backend config, etc.
 
----
-### 7. CLI Installation & Authentication
+![OpenTofu secrets in Infisical](../../media/infrastructure/infisical/tofu-secrets.png)
+
+## CLI Setup
+
 Reference: https://infisical.com/docs/cli/usage
+
+Install the CLI:
+
 ```bash
 brew install infisical/get-cli/infisical
-infisical login
-```
-Login opens a browser or prompts for token. After login:
-```bash
-cd /path/to/project
-infisical init   # Creates local .infisical config if required
 ```
 
----
-### 8. Injecting Secrets into OpenTofu/Terraform
-Use `infisical run` to wrap commands with environment injection.
-For example, You can run OpenTofu/Terraform commands and inject variables into environment:
+Login (opens browser or prompts for token):
+
+```bash
+infisical login
+```
+
+Initialize in your project directory if needed:
+
+```bash
+cd /path/to/project
+infisical init
+```
+
+## Using With OpenTofu/Terraform
+
+Wrap your commands with `infisical run` to inject secrets as environment variables:
+
 ```bash
 infisical run --env=prod --path=/tofu -- tofu init -reconfigure
 infisical run --env=prod --path=/tofu -- tofu plan
 infisical run --env=prod --path=/tofu -- tofu apply
 ```
-Flags:
-- `--env`: Infisical environment (prod/dev/staging)
-- `--path`: Path/folder where secrets are stored
 
+What the flags mean:
 
-### 9. Backups & Restore
+- `--env`: Which Infisical environment to use (prod/dev/staging)
+- `--path`: Where the secrets are stored in Infisical
+
+## Backups
+
+Backing up Postgres:
+
 ```bash
-# Backup Postgres
+# Backup
 docker exec infisical-db pg_dump -U infisical infisical > backup.sql
 
 # Restore
 docker exec -i infisical-db psql -U infisical -d infisical < backup.sql
 ```
-Redis persistence holds transient data; primary source of truth is Postgres.
 
----
-### 10. Upgrades
+Redis is just for caching, so the real data lives in Postgres.
+
+## Upgrading
+
 ```bash
 docker compose pull backend
 docker compose up -d backend
 ```
-Review release notes for migration steps before upgrading major versions.
 
-### 11. Quick Reference Commands
+Check the release notes before upgrading between major versions.
+
+## Quick Commands
+
 ```bash
-# Start stack
+# Start everything
 docker compose up -d
 
-# Tail backend logs
+# Watch backend logs
 docker compose logs -f backend
 
-# Generate keys
+# Generate new keys
 openssl rand -hex 16
 openssl rand -base64 32
 
-# Inject and run plan
+# Run tofu with secrets injection
 infisical run --env=prod --path=/tofu -- tofu plan
 ```

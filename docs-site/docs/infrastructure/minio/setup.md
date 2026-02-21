@@ -1,9 +1,10 @@
-**MinIO Setup for Terraform State**
+# MinIO Setup for Terraform State
 
-This guide configures a local or remote MinIO server to host Terraform state in an S3-compatible bucket with scoped permissions.
+Setting up MinIO to store Terraform/OpenTofu state files with proper access controls.
 
-**1) Run MinIO with Docker**
-Use Docker Compose or a single container. Example Compose service:
+## Running MinIO
+
+Using Docker Compose:
 
 ```yaml
 services:
@@ -21,30 +22,33 @@ services:
     command: server /data --console-address ":9001"
 ```
 
-Start the stack and confirm the console at `http://<MINIO_HOST>:9001`.
+Start it up and access the console at `http://<YOUR_HOST>:9001`.
 
-**2) Install MinIO Client (mc)**
+## Installing MinIO Client
 
 ```bash
 brew install minio-mc
 ```
 
-**3) Create an alias to your MinIO server**
+## Setting Up an Alias
+
+Point the client at your MinIO server:
 
 ```bash
 mc alias set minio http://<MINIO_HOST>:9000 <MINIO_ROOT_USER> <MINIO_ROOT_PASSWORD>
 ```
 
-Replace `<MINIO_HOST>` with the IP/hostname where MinIO is running.
+Replace the placeholders with your actual MinIO host and root credentials.
 
-**4) Create the Terraform state bucket**
+## Creating the Bucket
 
 ```bash
 mc mb minio/terraform-states
 ```
 
-**5) Create a restricted policy for Terraform state**
-Create a file named `tfstate_policy.json` with the following content:
+## Creating a Policy
+
+Create a file `tfstate_policy.json` with limited permissions for just this bucket:
 
 ```json
 {
@@ -71,35 +75,38 @@ Create a file named `tfstate_policy.json` with the following content:
 }
 ```
 
-Add the policy to MinIO:
+Add it to MinIO:
 
 ```bash
 mc admin policy add minio tfstate-policy tfstate_policy.json
 ```
 
-**6) Create a dedicated Terraform user**
+## Creating a User
+
+Create a dedicated user for Terraform with limited permissions:
 
 ```bash
-mc admin user add minio tf-state-user <SECRET>
+mc admin user add minio tf-state-user <STRONG_PASSWORD>
 mc admin policy attach minio tfstate-policy --user tf-state-user
 ```
 
-Use a strong `<SECRET>` and store it securely (e.g., in Infisical).
+Use a strong password and save it in Infisical (not in a text file somewhere).
 
-**7) Verify access**
+## Testing Access
 
 ```bash
 mc ls minio/terraform-states
 ```
 
-You should see an empty bucket with no permission errors.
+Should show an empty bucket without permission errors.
 
-**8) Configure Terraform to use MinIO (S3 backend)**
-Configuration process will be provided in the terraform section TODO: ADD LINKS
+## Using With Terraform
 
-**Dashboard**
+The backend configuration is covered in the [OpenTofu setup guide](../tofu/setup.md).
 
-You can manage buckets and users via the MinIO Console at `http://<MINIO_HOST>:9001` or at the https link if You put server behind the proxy.
+## Console Dashboard
 
-![MinIO Console – Bucket List](../../media/infrastructure/minio/dashboard.png)
-_Figure: MinIO administration console showing the terraform-states bucket._
+You can manage everything through the web UI at `http://<YOUR_HOST>:9001` (or the HTTPS URL if behind a proxy).
+
+![MinIO Console](../../media/infrastructure/minio/dashboard.png)
+_The MinIO console showing the terraform-states bucket._
