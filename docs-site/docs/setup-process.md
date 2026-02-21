@@ -1,146 +1,144 @@
-# How I Set This Up
+# Setting This Up
 
-My journey building this project from scratch - the decisions I made and what I learned along the way.
+Here's how I built this project from scratch. The decisions I made, what worked, what didn't.
 
-## The Goal
+## What I Was Going For
 
-Build a portfolio website with a professional DevOps setup that shows:
-- Infrastructure as Code
-- Proper secrets management
-- Self-hosted CI/CD pipeline
-- Real-world DevOps practices
+I wanted to build a portfolio site but actually learn DevOps properly:
+- Write infrastructure as code
+- Handle secrets the right way (not in git)
+- Set up my own CI/CD pipeline
+- Do it like you'd do it at work, not just for a tutorial
 
-## The Setup Journey
+## How I Built It
 
-### 1. Foundation: Where to Store Everything
+### Step 1: Where Do I Put My State Files?
 
-**First problem:** Where should Terraform state files live?
+**The problem:** Terraform state files need to live somewhere that isn't my laptop.
 
-I chose **MinIO** (S3-compatible storage) running on Docker. This means the infrastructure state is stored remotely, so I can manage it from any machine - not just my laptop.
+I went with **MinIO** - it's basically S3 but self-hosted. Runs in Docker on one of my servers and gives me an S3-compatible API for free. No AWS bills, full control over the data.
 
-**Why MinIO?** Self-hosted, S3-compatible, no AWS costs. Perfect for homelab.
+Why this matters: With remote state, I can run terraform from anywhere. CI/CD can access it, other machines can access it. Not tied to one laptop.
 
-[→ MinIO Technical Setup](infrastructure/minio/setup.md)
-
----
-
-**Second problem:** Where do I store passwords, API tokens, SSH keys?
-
-I chose **Infisical** - a self-hosted secrets vault. All credentials live there and get injected at runtime with `infisical run` commands. Nothing hardcoded in git.
-
-**Why Infisical?** Modern UI, OIDC support for GitHub Actions, self-hosted. Cleaner than `.env` files everywhere.
-
-[→ Infisical Technical Setup](infrastructure/infisical/setup.md)
+[→ How I set up MinIO](infrastructure/minio/setup.md)
 
 ---
 
-### 2. Infrastructure: Provisioning the VM
+### Step 2: Where Do Secrets Go?
 
-**The challenge:** Manually creating VMs gets old fast.
+**The problem:** API tokens, passwords, SSH keys - where do these live?
 
-I wrote **OpenTofu/Terraform** code to automatically provision an Ubuntu VM on my Proxmox server. The configuration includes:
-- Cloud-init for automatic setup
-- SSH key injection
-- Static IP assignment
-- Network configuration
+**Infisical** was my answer. Self-hosted secrets vault with a clean UI. Instead of `.env` files all over the place, everything lives in one vault and gets injected at runtime with `infisical run`.
 
-Commands now look like:
+What I like about it: OIDC support for GitHub Actions means no long-lived tokens. The runner authenticates, grabs secrets, uses them, they expire. Clean.
+
+[→ Infisical setup details](infrastructure/infisical/setup.md)
+
+---
+
+### Step 3: Provisioning VMs
+
+**The challenge:** I got tired of manually creating VMs in Proxmox.
+
+Wrote **OpenTofu** code (Terraform but open-source) to spin up Ubuntu VMs automatically. Cloud-init handles the initial setup - SSH keys, network config, all that. It's all in code now.
+
+Running it looks like:
 ```bash
 infisical run --env=prod --path=/tofu -- tofu apply
 ```
 
-Secrets get injected, VM gets created. Infrastructure as code done right.
+Secrets come from Infisical, VM gets created. Done.
 
-**Key learning:** Cloud-init is amazing for initial VM setup. No manual SSH configuration needed.
+What I learned: Cloud-init is great for initial VM bootstrapping. No need to SSH in and run setup scripts manually.
 
-[→ OpenTofu Technical Setup](infrastructure/tofu/setup.md)
+[→ OpenTofu configuration](infrastructure/tofu/setup.md)
 
 ---
 
-### 3. Configuration: Setting Up the VM
+### Step 4: Configuring the VM
 
-**The need:** Fresh Ubuntu VM needs Docker, dependencies, and user permissions.
+**The need:** Fresh Ubuntu VM needs Docker and proper setup.
 
-I used **Ansible** with a simple playbook that:
+Used **Ansible** for this. One playbook that:
 - Installs Docker
-- Configures user permissions
-- Ensures services start on boot
+- Sets up user permissions
+- Makes sure everything starts on boot
 
-One command to configure the whole VM. Repeatable and documented.
+Run it once, VM is ready. Run it again, still works (idempotent).
 
-**Key learning:** Ansible playbooks are idempotent - safe to run multiple times.
-
----
-
-### 4. CI/CD: Self-Hosted Runner
-
-**The decision:** Use GitHub-hosted runners or run my own?
-
-I went self-hosted because:
-- Can access my private network (Infisical, MinIO)
-- Full control over the environment
-- Custom tools pre-installed
-- No cost per minute
-
-Set up the GitHub Actions runner as a systemd service on the VM, then configured **OIDC authentication** so workflows can fetch secrets from Infisical without long-lived tokens.
-
-**Key learning:** OIDC is way better than static tokens - short-lived credentials reduce risk.
+Lesson learned: Ansible is forgiving. You can run playbooks multiple times without breaking stuff.
 
 ---
 
-### 5. The Application
+### Step 5: CI/CD Runner
 
-Built a **Next.js 15** portfolio website with:
-- React 18 and TypeScript
-- Tailwind CSS for styling
-- Multi-stage Dockerfile (build stage + runtime stage)
-- Docker image under 200MB
+**The decision:** GitHub-hosted runners or my own?
 
-**The workflow now:**
-1. Push code to GitHub
+Went self-hosted because:
+- Can hit my private network stuff (Infisical, MinIO)
+- Full control over what's installed
+- No per-minute costs
+- Can customize the environment exactly how I want
+
+Set it up as a systemd service on the VM. Combined with **OIDC authentication** so workflows can grab secrets without storing static tokens.
+
+What I learned: OIDC is way better than static tokens. Short-lived credentials, automatic rotation. Should've done this from the start.
+
+---
+
+### Step 6: The App
+
+Built a **Next.js 15** portfolio site:
+- React 18 with TypeScript
+- Tailwind for styling
+- Multi-stage Dockerfile (build stage + runtime)
+- Final image under 200MB
+
+**The current workflow:**
+1. Push code
 2. Self-hosted runner picks it up
-3. Fetches secrets via OIDC
-4. Builds and tests the Docker image
-5. PR validation complete
+3. Authenticates to Infisical with OIDC
+4. Grabs secrets, builds Docker image
+5. Tests run
+6. PR gets validated
 
-Everything automated.
-Everything automated.
+All automated.
 
 ## What I Learned
 
-**Infrastructure as Code is worth it**
-Being able to destroy and rebuild everything from code is powerful. No more "works on my machine" issues.
+**Infrastructure as Code pays off**  
+Being able to nuke everything and rebuild from code is powerful. No more "it works on my machine" problems.
 
-**Secrets management is critical**
-Runtime injection with Infisical is way cleaner than `.env` files scattered everywhere. And OIDC removes the need for long-lived tokens.
+**Proper secrets management matters**  
+Infisical with runtime injection is way cleaner than `.env` files everywhere. And OIDC beats static tokens every time.
 
-**Self-hosted gives you control**
-Running my own GitHub Actions runner means I can access private network resources and install exactly what I need.
+**Self-hosting gives you flexibility**  
+My own runner means I can hit private network stuff and install whatever tools I need. Worth the extra setup.
 
-**Documentation matters**
-Writing this down helps me remember what I did and why. Future me will appreciate it.
+**Write it down**  
+Documenting this helps me remember what I did and why. Future me will thank current me.
 
-## The Result
+## End Result
 
-Now when I push code:
+When I push code now:
 
-1. GitHub triggers my self-hosted runner
-2. Runner authenticates to Infisical via OIDC
-3. Secrets are fetched securely
-4. Docker image builds and tests run
-5. PR validation passes or fails
+1. GitHub webhook hits my runner
+2. Runner does OIDC auth to Infisical
+3. Secrets get pulled in
+4. Docker build happens, tests run
+5. PR validation completes
 
-Everything automated, secure, and repeatable.
+Everything's automated, secured, and reproducible.
 
-## Tech Stack
+## What I Used
 
-| Purpose | Tool | Why |
+| What It Does | Tool | Why |
 |---------|------|-----|
-| Compute | Proxmox VE | Already had it |
-| IaC | OpenTofu | Open-source Terraform |
-| Config | Ansible | Industry standard |
-| Secrets | Infisical | Self-hosted, modern |
-| Storage | MinIO | S3-compatible |
-| CI/CD | GitHub Actions | Built-in |
-| Container | Docker | Universal |
-| App | Next.js | Modern React |
+| Compute | Proxmox VE | Already had it running |
+| IaC | OpenTofu | Open-source Terraform fork |
+| Config Management | Ansible | Standard tool, does the job |
+| Secrets | Infisical | Self-hosted, modern, has OIDC |
+| State Storage | MinIO | S3-compatible, local |
+| CI/CD | GitHub Actions | Built into GitHub |
+| Containers | Docker | Everyone uses it |
+| Web Framework | Next.js | Modern React setup |

@@ -1,24 +1,24 @@
-# Portfolio CICD 2.0 - Project Overview
+# Portfolio CICD 2.0
 
-## What This Project Is
+## About This Project
 
-A portfolio website built with Next.js, deployed with a complete self-hosted CI/CD pipeline in my homelab. This demonstrates practical DevOps skills using real infrastructure.
+This is my portfolio site built with Next.js and deployed through a self-hosted CI/CD pipeline running in my homelab. I wanted to learn proper DevOps practices by actually doing them, not just reading about them.
 
-## What I Accomplished
+## The Stack
 
-### The Application
-- Built a responsive portfolio website with Next.js 15 and Tailwind CSS
-- Containerized with Docker for consistent deployments
-- Automated builds and testing with GitHub Actions
+### Application Side
+- Next.js 15 portfolio site with Tailwind CSS for styling
+- Everything runs in Docker containers
+- GitHub Actions handles the build and test automation
 
-### The Infrastructure
-- **Proxmox VM** - Provisioned Ubuntu VM automatically with OpenTofu
-- **Secrets Management** - Self-hosted Infisical vault (no hardcoded credentials)
-- **State Storage** - MinIO S3-compatible backend for Terraform state
-- **Configuration** - Ansible playbook to install Docker and dependencies
-- **CI/CD** - Self-hosted GitHub Actions runner on the VM
+### Infrastructure Side
+- **Proxmox VM** running Ubuntu - spun up automatically with OpenTofu
+- **Infisical** for secrets - nothing hardcoded anywhere
+- **MinIO** for storing Terraform state files (S3-compatible)
+- **Ansible** playbook that sets up Docker and all the dependencies
+- **Self-hosted GitHub runner** living on the VM
 
-## The Complete Flow
+## How It All Works Together
 
 ```mermaid
 flowchart TB
@@ -43,60 +43,53 @@ flowchart TB
     VM -.->|Hosts| Docker
 ```
 
-## How It Works
+## The Workflow
 
-### Development Workflow
-1. I push code to GitHub
-2. GitHub triggers the self-hosted runner on my VM
-3. Runner fetches secrets from Infisical using OIDC authentication
-4. Runs tests and builds the Docker image
-5. If tests pass, the app can be deployed
+When I push code to GitHub:
 
-### Infrastructure Management
-1. Secrets are stored in self-hosted Infisical
-2. OpenTofu code provisions VMs on Proxmox
-3. State files stored remotely in MinIO (S3-compatible)
-4. Ansible configures VMs with Docker and dependencies
-5. GitHub Actions runner installed as a systemd service
+1. A webhook hits my self-hosted runner
+2. Runner grabs secrets from Infisical via OIDC (no long-lived tokens)
+3. Docker builds and tests run
+4. If everything passes, deployment can happen
 
-## Key Features
+Infrastructure side:
 
-**No Hardcoded Secrets**
-- All credentials in Infisical vault
-- Runtime injection with `infisical run`
-- OIDC authentication for GitHub Actions
+- All secrets live in Infisical - proper vault, not `.env` files
+- OpenTofu provisions the VMs on my Proxmox box
+- State files go to MinIO, which means I can run this from any machine
+- Ansible handles the VM setup - Docker install, user permissions, all that
+- GitHub runner runs as a systemd service so it survives reboots
 
-**Infrastructure as Code**
-- VM defined in OpenTofu/Terraform
-- Configuration managed with Ansible
-- Repeatable and documented
+## Why This Setup?
 
-**Self-Hosted CI/CD**
-- GitHub Actions runner on my own hardware
-- Full control over build environment
-- Access to private network resources
+**Secrets actually secured**  
+Using Infisical means no hardcoded credentials anywhere. Runtime injection with `infisical run` and OIDC for GitHub Actions. 
 
-**Containerized App**
-- Multi-stage Docker build for optimization
-- Runs consistently across environments
-- Easy to deploy and scale
+**Infrastructure as Code**  
+The VM config is in OpenTofu files, configuration is Ansible playbooks. I can tear down and rebuild everything from scratch without clicking through UIs.
+
+**Self-hosted CI/CD**  
+My own runner on my hardware means I can access stuff on my private network (like Infisical and MinIO). Plus I'm not paying per-minute for builds.
+
+**Containerized**  
+Multi-stage Docker builds keep the final image small. Runs the same everywhere whether it's my laptop or the production VM.
 
 ## Documentation
 
-Detailed setup guides for each component:
+I documented the setup process for each component:
 
-- **[How I Set This Up](setup-process.md)** - My journey setting up this project
-- [MinIO Setup](infrastructure/minio/setup.md) - S3-compatible storage for Terraform state
-- [Infisical Setup](infrastructure/infisical/setup.md) - Self-hosted secrets management
-- [OpenTofu Setup](infrastructure/tofu/setup.md) - Infrastructure provisioning with IaC
+- **[Setup Journey](setup-process.md)** - how I built this thing step by step
+- [MinIO Setup](infrastructure/minio/setup.md) - getting S3-compatible storage running for state files
+- [Infisical Setup](infrastructure/infisical/setup.md) - self-hosted secrets vault setup
+- [OpenTofu Setup](infrastructure/tofu/setup.md) - provisioning VMs with code
 
-## Tech Stack
+## Tech Used
 
 - **Frontend:** Next.js 15, React 18, TypeScript, Tailwind CSS
 - **Infrastructure:** Proxmox VE, OpenTofu, Ansible
 - **Secrets:** Infisical (self-hosted)
 - **Storage:** MinIO (S3-compatible)
-- **CI/CD:** GitHub Actions (self-hosted runner)
+- **CI/CD:** GitHub Actions with self-hosted runner
 - **Container:** Docker
 
 ## Project Structure

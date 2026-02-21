@@ -1,19 +1,22 @@
-### 1. Overview
-I keep this lightweight and safe for local dev.
+# OpenTofu/Terraform Setup
 
-### 2. Why I chose this setup
-- Infisical injects secrets at runtime, so I don’t hardcode credentials in `provider.tf`.
-- MinIO hosts the Terraform/OpenTofu state (S3-compatible) so automations on other machines can reference it reliably.
+How I set up OpenTofu to provision VMs on Proxmox with proper secrets management.
 
-### 3. Quick summary
-- Secrets (Proxmox token, MinIO keys) live in Infisical at path `/tofu`.
-- OpenTofu reads them via `infisical run ... tofu <cmd>`.
-- State backend points to MinIO (`terraform-states` bucket) for portability.
+## Why This Way?
 
-### 4. Provider Config
-See the Proxmox provider config below. (Original file: `infrastructure/tofu/provider.tf`)
+- Secrets come from Infisical at runtime - nothing hardcoded in the provider config
+- State files live in MinIO (S3-compatible) so I can run this from any machine
+- Everything's in code so I can recreate the infrastructure whenever I need to
 
-[View on GitHub](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/blob/feat/changes/infrastructure/tofu/provider.tf)
+## The Setup
+
+Secrets (Proxmox API token, MinIO credentials) are stored in Infisical under the `/tofu` path. When I run OpenTofu commands, they're wrapped with `infisical run` which injects the secrets as environment variables.
+
+The state backend points to MinIO (`terraform-states` bucket) instead of storing state locally.
+
+## Provider Configuration
+
+Here's my Proxmox provider setup from [provider.tf](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/blob/feat/changes/infrastructure/tofu/provider.tf):
 ```tf
 terraform {
   required_providers {
@@ -35,45 +38,55 @@ provider "proxmox" {
 }
 ```
 
-### 5. Proxmox Setup
-First, create a user in Proxmox:
-![](../../media/infrastructure/tofu/pve-user.png)
+The provider picks up `PM_API_TOKEN_ID` and `PM_API_TOKEN_SECRET` from environment variables (injected by Infisical).
 
-For security, create a separate role for Terraform executions:
-![](../../media/infrastructure/tofu/pve-role.png)
+## Setting Up Proxmox
 
-Assign the role to the user:
-![](../../media/infrastructure/tofu/pve-assign-role.png)
+First, create a user in Proxmox for Terraform:
 
-Create an API token:
-![](../../media/infrastructure/tofu/pve-token.png)
+![Proxmox user creation](../../media/infrastructure/tofu/pve-user.png)
 
-### 6. Infisical Secrets
-Save that token (ID + secret) into your Infisical vault at path `/tofu` — see: [Managing Secrets for OpenTofu](../infisical/setup.md#6-infisical-secrets)
+Create a dedicated role with only the permissions Terraform needs:
 
-Recommended keys in Infisical:
+![Proxmox role setup](../../media/infrastructure/tofu/pve-role.png)
+
+Assign that role to the Terraform user:
+
+![Role assignment](../../media/infrastructure/tofu/pve-assign-role.png)
+
+Generate an API token for that user:
+
+![API token creation](../../media/infrastructure/tofu/pve-token.png)
+
+## Storing Secrets in Infisical
+
+Take the token ID and secret from Proxmox and save them in Infisical at path `/tofu`. See the [Infisical setup guide](../infisical/setup.md#6-infisical-secrets) for details on managing secrets.
+
+Keys I'm storing in Infisical:
+
 - `PM_API_TOKEN_ID`: Proxmox API Token ID
 - `PM_API_TOKEN_SECRET`: Proxmox API Token Secret
-- `AWS_ACCESS_KEY_ID`: MinIO access key (for S3 backend)
+- `AWS_ACCESS_KEY_ID`: MinIO access key (for the S3 backend)
 - `AWS_SECRET_ACCESS_KEY`: MinIO secret key
 
-These map to environment variables that the Proxmox provider and S3 backend read automatically.
+These get picked up automatically by the Proxmox provider and S3 backend.
 
-### 7. Run Commands
+## Running OpenTofu Commands
+
 ```bash
-# Initialize backend with injected secrets
+# Initialize the backend with secrets from Infisical
 infisical run --env=prod --path=/tofu -- tofu init -reconfigure
 
-# Plan/apply with the same injection
+# Plan and apply
 infisical run --env=prod --path=/tofu -- tofu plan
 infisical run --env=prod --path=/tofu -- tofu apply
 ```
 
-### 8. State Backend
-MinIO backend details and policy setup: [MinIO Setup](../minio/setup.md)
+## State Backend Configuration
 
-Backend configuration (original file: `infrastructure/tofu/backend.tf`)
-[View backend.tf on GitHub](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/blob/feat/changes/infrastructure/tofu/backend.tf)
+See the [MinIO setup guide](../minio/setup.md) for details on setting up the bucket and policies.
+
+Here's my backend config from [backend.tf](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/blob/feat/changes/infrastructure/tofu/backend.tf):
 
 ```tf
 
@@ -99,17 +112,19 @@ terraform {
 
 What this does:
 
-- `bucket`: Points to your MinIO bucket name (`terraform-states`).
-- `endpoint`: Your MinIO S3 URL. Use `http://<host>:9000` if no TLS; use `https://...` behind a reverse proxy.
-- `key`: Path/name of the state file inside the bucket (organize by project/environment).
-- `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`: Not hardcoded; injected via Infisical when you run `tofu`.
-- `region`: Arbitrary string for compatibility; validations are skipped.
-- `skip_*` flags: Tell the S3 backend to skip AWS-specific checks since MinIO isn’t AWS.
-- `use_path_style`: Required for MinIO’s path-style addressing.
+- `bucket`: The MinIO bucket name (`terraform-states`)
+- `endpoint`: My MinIO S3 endpoint (behind a reverse proxy with HTTPS)
+- `key`: Path and filename for the state file inside the bucket
+- Credentials come from `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` env vars (Infisical injects these)
+- `region`: Just a dummy value since MinIO doesn't really use regions
+- `skip_*` flags: Tell the backend to skip AWS-specific validations
+- `use_path_style`: MinIO needs path-style addressing instead of virtual-hosted style
 
-How I initialize this safely:
+Running the init command with Infisical injects the credentials:
+
 ```bash
 infisical run --env=prod --path=/tofu -- tofu init -reconfigure
 ```
-This wraps `tofu init` with environment injection, so the backend has credentials without committing them to git.
+
+This way credentials never hit the git repo.
 
