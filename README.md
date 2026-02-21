@@ -2,7 +2,7 @@
 
 Portfolio website with automated CI/CD using self-hosted infrastructure.
 
-**📖 [View Documentation](https://dawo9889.github.io/My-Portfolio-CICD-2.0/)** | ![PR CI](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/actions/workflows/pr-ci.yml/badge.svg) ![Docs](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/actions/workflows/docs.yml/badge.svg)
+**📖 [View Documentation](https://dawo9889.github.io/My-Portfolio-CICD-2.0/)**
 
 ## What I Built
 
