@@ -106,16 +106,16 @@ All automated.
 
 ## What I Learned
 
-**Infrastructure as Code pays off**  
+**Infrastructure as Code pays off**
 Being able to nuke everything and rebuild from code is powerful. No more "it works on my machine" problems.
 
-**Proper secrets management matters**  
+**Proper secrets management matters**
 Infisical with runtime injection is way cleaner than `.env` files everywhere. And OIDC beats static tokens every time.
 
-**Self-hosting gives you flexibility**  
+**Self-hosting gives you flexibility**
 My own runner means I can hit private network stuff and install whatever tools I need. Worth the extra setup.
 
-**Write it down**  
+**Write it down**
 Documenting this helps me remember what I did and why. Future me will thank current me.
 
 ## End Result
