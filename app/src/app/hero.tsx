@@ -23,7 +23,7 @@ function Hero() {
 
           {/* Add profile image under the description */}
           <img
-            src="image/my-image.jpg" 
+            src="image/my-image.jpg"
             alt="Dawid Gala"
             className="rounded-full w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 mx-auto mb-6 object-cover"
             style={{ objectPosition: "top center" }}
