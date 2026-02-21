@@ -25,10 +25,21 @@ markdown_extensions:
       permalink: true
   - codehilite:
       guess_lang: false
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.details
 plugins:
   - search
 nav:
   - Home: index.md
+  - How I Set This Up: setup-process.md
   - Infrastructure:
     - MinIO: infrastructure/minio/setup.md
     - Infisical: infrastructure/infisical/setup.md
