@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://dawo9889.github.io/My-Portfolio-CICD-2.0/</loc>
+         <lastmod>2026-02-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dawo9889.github.io/My-Portfolio-CICD-2.0/setup-process/</loc>
+         <lastmod>2026-02-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dawo9889.github.io/My-Portfolio-CICD-2.0/infrastructure/infisical/setup/</loc>
+         <lastmod>2026-02-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dawo9889.github.io/My-Portfolio-CICD-2.0/infrastructure/minio/setup/</loc>
+         <lastmod>2026-02-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dawo9889.github.io/My-Portfolio-CICD-2.0/infrastructure/tofu/setup/</loc>
+         <lastmod>2026-02-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>
