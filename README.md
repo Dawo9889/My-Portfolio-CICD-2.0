@@ -2,6 +2,8 @@
 
 Portfolio website with automated CI/CD using self-hosted infrastructure.
 
+**📖 [View Documentation](https://dawo9889.github.io/My-Portfolio-CICD-2.0/)** | ![PR CI](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/actions/workflows/pr-ci.yml/badge.svg) ![Docs](https://github.com/Dawo9889/My-Portfolio-CICD-2.0/actions/workflows/docs.yml/badge.svg)
+
 ## What I Built
 
 A Next.js portfolio application with a complete DevOps setup in my homelab:
@@ -23,22 +25,16 @@ GitHub Push → Self-Hosted Runner → Fetch Secrets from Infisical → Build & 
               Runs on Proxmox VM
 ```
 
-## 📚 Documentation
+**[📖 Full Documentation Site →](https://dawo9889.github.io/My-Portfolio-CICD-2.0/)**
 
-- **[Project Overview](docs-site/docs/index.md)** - What this project is about
-- **[How I Set This Up](docs-site/docs/setup-process.md)** - My journey from start to finish
-- [MinIO Setup](docs-site/docs/infrastructure/minio/setup.md) - S3-compatible state backend
+Quick links:
+- [Project Overview](https://dawo9889.github.io/My-Portfolio-CICD-2.0/) - What this project is about
+- [How I Set This Up](https://dawo9889.github.io/My-Portfolio-CICD-2.0/setup-process/) - My journey from start to finish
+- [MinIO Setup](https://dawo9889.github.io/My-Portfolio-CICD-2.0/infrastructure/minio/setup/) - S3-compatible state backend
+- [Infisical Setup](https://dawo9889.github.io/My-Portfolio-CICD-2.0/infrastructure/infisical/setup/) - Secrets management
+- [OpenTofu Setup](https://dawo9889.github.io/My-Portfolio-CICD-2.0/infrastructure/tofu/setup/) - S3-compatible state backend
 - [Infisical Setup](docs-site/docs/infrastructure/infisical/setup.md) - Secrets management
 - [OpenTofu Setup](docs-site/docs/infrastructure/tofu/setup.md) - VM provisioning
-
-## Tech Stack
-
-- Next.js 15 + React 18 + TypeScript + Tailwind CSS
-- Docker
-- OpenTofu (Terraform) + Ansible
-- Infisical (secrets) + MinIO (S3)
-- GitHub Actions (self-hosted)
-- Proxmox VE
 
 ---
 
